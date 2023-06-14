@@ -18,7 +18,7 @@ export default defineConfig({
         vue({
             template: {
                 transformAssetUrls: {
-                    base: null,
+                    base: '/var/www/otomotives.com/oscar',
                     includeAbsolute: false,
                 },
             },
