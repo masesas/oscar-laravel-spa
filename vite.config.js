@@ -3,9 +3,15 @@ import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
 import removePreloads from './removePreloads'
 
-
-
 export default defineConfig({
+    build: {
+        modulePreload: false,
+        modulePreload: {
+            resolveDependencies(url, deps, context) {
+                return [] // Your list of preloaded deps.
+            },
+        },
+    },
     plugins: [
         removePreloads(),
         laravel({
@@ -19,6 +25,7 @@ export default defineConfig({
         }),
         vue({
             template: {
+
                 transformAssetUrls: {
                     base: 'https://otomotives.com/oscar',
                     includeAbsolute: true,
