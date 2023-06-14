@@ -13,7 +13,7 @@ export default defineConfig({
             ],
             refresh: true,
             buildDirectory: '/build',
-            publicDirectory: 'public'
+            publicDirectory: '/var/www/otomotives.com/oscar'
         }),
         vue({
             template: {
