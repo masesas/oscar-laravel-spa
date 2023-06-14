@@ -6,11 +6,6 @@ import removePreloads from './removePreloads'
 export default defineConfig({
     build: {
         modulePreload: false,
-        modulePreload: {
-            resolveDependencies(url, deps, context) {
-                return [] // Your list of preloaded deps.
-            },
-        },
     },
     plugins: [
         removePreloads(),
