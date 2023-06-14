@@ -21,7 +21,7 @@ export default defineConfig({
             template: {
                 transformAssetUrls: {
                     base: 'https://otomotives.com/oscar',
-                    includeAbsolute: false,
+                    includeAbsolute: true,
                 },
             },
         }),
