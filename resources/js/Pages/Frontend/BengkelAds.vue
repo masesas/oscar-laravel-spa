@@ -31,6 +31,7 @@ const alamatEncode = iframeGoogle(encodeURIComponent(props.bengkel.ALAMAT + ', '
 </script>
 <template>
     <div>
+        <Head :title="props.bengkel.NAMA_BENGKEL" />
         <main class="flex-shrink-0">
             <nav class="navbar sticky-top navbar-expand-lg navbar-light gradient-primary card shadow">
                 <div class="container px-5">
