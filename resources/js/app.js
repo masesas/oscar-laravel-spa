@@ -29,7 +29,7 @@ createInertiaApp({
     resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
     setup({ el, App, props, plugin }) {
         const myApp = createApp({ render: () => h(App, props) });
-        const assets = process.env.NODE_ENV != 'production' ? '/img' : '../../img';
+        const assets = process.env.NODE_ENV != 'production' ? '/img' : 'https://otomotives.com/oscar';
 
         myApp.config.globalProperties.$route = route
         myApp.config.globalProperties.$baseAssets = assets;
