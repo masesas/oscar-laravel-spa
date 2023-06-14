@@ -24,12 +24,12 @@ const props = defineProps({
     }
 })
 
-const spanClass = computed(() => `inline-flex justify-center items-center ${props.w} ${props.h}`)
+const spanClass = computed(() => `d-inline-flex justify-content-center align-items-center ${props.w} ${props.h}`)
 </script>
 
 <template>
     <span :class="spanClass">
-        <svg viewBox="0 0 24 24" :width="size" :height="size" class="inline-block">
+        <svg viewBox="0 0 24 24" :width="size" :height="size" class="d-inline">
             <path :fill="color" :d="path" />
         </svg>
     </span>

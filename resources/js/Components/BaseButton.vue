@@ -76,19 +76,8 @@ const labelClass = computed(() => props.small && props.icon ? 'px-1' : 'px-2')
 
 const componentClass = computed(() => {
     const base = [
-        'inline-flex',
-        'cursor-pointer',
-        'justify-center',
-        'items-center',
-        'whitespace-nowrap',
-        'focus:outline-none',
-        'transition-colors',
-        'focus:ring',
-        'duration-150',
-        'border',
-        props.roundedFull ? 'rounded-full' : 'rounded',
-        props.active ? 'ring ring-black dark:ring-white' : 'ring-blue-700',
-        getButtonColor(props.color, props.outline, !props.disabled)
+        'btn',
+        'btn-primary',
     ]
 
     if (props.small)

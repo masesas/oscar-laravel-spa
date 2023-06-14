@@ -1,4 +1,6 @@
 import '../css/main.css';
+import '../sass/app.scss';
+import 'bootstrap';
 
 import { createPinia } from 'pinia'
 import { useStyleStore } from '@/Stores/style.js'
@@ -28,7 +30,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         const myApp = createApp({ render: () => h(App, props) });
         myApp.config.globalProperties.$route = route
-        
+
         myApp.use(plugin)
         myApp.use(pinia)
         myApp.use(ZiggyVue, Ziggy)

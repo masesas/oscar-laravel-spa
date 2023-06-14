@@ -2,112 +2,230 @@
 import { ref } from 'vue';
 import { Head, Link, useForm } from "@inertiajs/vue3"
 import BaseButton from '@/Components/BaseButton.vue';
-import SectionTitleLineWithButton from '@/Components/SectionTitleLineWithButton.vue'
-import NavBarItemLabel from '@/Components/NavBarItemLabel.vue';
 import CardBox from "@/Components/CardBox.vue"
 import FormField from '@/Components/FormField.vue'
 import FormControl from '@/Components/FormControl.vue'
-import BaseDivider from '@/Components/BaseDivider.vue'
 import BaseButtons from '@/Components/BaseButtons.vue'
-import SectionMain from '@/Components/SectionMain.vue';
-import SectionGrid from '@/Components/SectionGrid.vue';
+import { mdiTicketPercent, mdiImage, mdiGoogleMaps } from '@mdi/js'
+import BaseIcon from '@/Components/BaseIcon.vue';
+import Waves from '@/Components/Waves.vue'
 
-const isOpenMenu = ref(false)
-
-const openMenu = () => isOpenMenu = !isOpenMenu
-
+const props = defineProps({
+    bengkel: {
+        type: Object,
+        default: () => ({}),
+    },
+})
 
 const form = useForm({
     _method: 'post',
     name: '',
 })
+const iframeGoogle = (alamat) => {
+    return "https://maps.google.com/maps?q=" + alamat + "&t=&z=13&ie=UTF8&iwloc=&output=embed";
+}
+const alamatEncode = iframeGoogle(encodeURIComponent(props.bengkel.ALAMAT + ', ' + props.bengkel.KOTA_KABUPATEN + ' ' + props.bengkel.KODE_POS));
 
 </script>
 <template>
-    <div class="w-full">
-        <header class="fixed w-full">
-            <nav class="bg-white border-gray-200 py-2.5 dark:bg-gray-900">
-                <div class="flex flex-wrap items-center justify-between max-w-screen-xl-1 px-4 mx-auto shadow-card">
-                    <a class="flex item-center">
-                        <img src="/img/icon/bengkelPro.png" class="h-6 mr-3 sm:h-9" />
-                        <span class="self-center text-xl font-bold whitespace-nowrap dark:text-white">Nama Bengkel</span>
+    <div>
+        <main class="flex-shrink-0">
+            <nav class="navbar sticky-top navbar-expand-lg navbar-light gradient-primary card shadow">
+                <div class="container px-5">
+                    <a class="navbar-brand fw-bolder d-flex align-items-center" href="#!">
+                        <img class="logo" src="/img/icon/bengkelPro.png" />
+                        <span class="mx-3 text-primary">{{ props.bengkel.NAMA_BENGKEL }}</span>
                     </a>
-                    <div class="flex items-center lg:order-2">
-                        <button type="button"
-                            class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
-                            <span class="sr-only">Open main menu</span>
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                            <svg class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-2">
-                        <ul
-                            class="flex flex-col p-4 font-medium border border-gray-100 rounde-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                            <li>
-                                <a href="#"
-                                    class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
-                                    aria-current="page">
-                                    Profile Bengkel
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation"><span
+                            class="navbar-toggler-icon"></span></button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link inline-icon fw-bold"  href="#voucher">
+                                    <BaseIcon :path="mdiTicketPercent" />
+                                    <span class="">Voucher</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="#"
-                                    class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-                                    Foto
+                            <li class="nav-item">
+                                <a class="nav-link inline-icon fw-bold" href="#foto">
+                                    <BaseIcon :path="mdiImage" />
+                                    <span>Foto Bengkel</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="#"
-                                    class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-                                    Tentang
+                            <li class="nav-item">
+                                <a class="nav-link inline-icon fw-bold" href="#lokasi">
+                                    <BaseIcon :path="mdiGoogleMaps" />
+                                    <span>Lokasi Bengkel</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </nav>
-        </header>
-        <SectionGrid class="pt-14 bg-white dark:bg-gray-800">
-            <div class="hidden lg:block lg:col-span-12 lg:mt-10">
-
-            </div>
-            <div class="col-span-12 lg:col-span-7 p-5">
-                <img class="shadow-card" src="/img/banner/ads/banner_ads_sengkaling.png" />
-            </div>
-            <div class="place-self-center text-center mt-10 col-span-12 lg:col-span-5 p-5">
-                <h3
-                    class="mb-4 max-w-2xl text-2xl font-extrabold leading-none md:text-5xl xl:text-2xl dark:text-white text-center">
-                    Masukkan No. Ponsel Untuk Mendapatkan Promo Bengkel
-                </h3>
-                <CardBox form @submit.prevent="form.post(route('user.update', 1))">
-                    <FormField :class="{ 'text-red-400': form.errors.name }">
-                        <FormControl v-model="form.name" type="text" placeholder="No. Ponsel" :error="form.errors.name">
-                            <div class="text-red-400 text-sm" v-if="form.errors.name">
-                                {{ form.errors.name }}
+            <Waves class="rotate-180" />
+            <section id="voucher" class="p-3 m-2">
+                <div class="container">
+                    <div class="row gx-4 gx-lg-5 align-items-center my-5">
+                        <div class="col-lg-7">
+                            <img class="img-fluid rounded mb-4 mb-lg-0" src="/img/banner/ads/banner_ads_sengkaling_md.png"
+                                alt="..." />
+                        </div>
+                        <div class="col-lg-5">
+                            <h1 class="fw-bolder text-center mb-3">Dapatkan Voucher Diskon Servis Dengan Memasukkan No.
+                                Ponsel
+                            </h1>
+                            <a class="btn btn-primary rounded-full w-100" href="#input-no-ponsel">Klaim Voucher Servis Sekarang!</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <Waves />
+            <section id="foto" class="bg-light py-5">
+                <div class="container">
+                    <div class="row text-center mt-5 my-3">
+                        <div class="col-lg-12">
+                            <h2 class="display-5 fw-bolder text-center text-black">
+                                Foto Bengkel
+                            </h2>
+                        </div>
+                        <div class="col-lg-12">
+                            <h5>Foto Bengkel {{ props.bengkel.NAMA_BENGKEL }}</h5>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center">
+                        <div class="row align-items-center justify-content-center text-center">
+                            <div v-if="props.bengkel.FOTO_DEPAN" class="col-lg-3 col-md-3 col-sm-3 mb-4 mb-md-0">
+                                <div class="card shadow">
+                                    <div class="card-img-top">
+                                        <img :src="props.bengkel.FOTO_DEPAN" class="foto" />
+                                    </div>
+                                    <div class="card-body">
+                                        <span class="card-text fw-bold">Foto Area Depan</span>
+                                    </div>
+                                </div>
                             </div>
-                        </FormControl>
-                    </FormField>
-                    <template #footer>
-                        <BaseButtons>
-                            <BaseButton type="submit" color="info" label="Claim Voucher" class="w-full"
-                                :class="{ 'opacity-25': form.processing }" :disabled="form.processing" />
-                        </BaseButtons>
-                    </template>
-                </CardBox>
-            </div>
-        </SectionGrid>
+                            <div v-if="props.bengkel.FOTO_AREA_SERVIS" class="col-md-3 col-sm-3 mb-4 mb-md-0">
+                                <div class="card shadow">
+                                    <div class="card-img-top">
+                                        <img :src="props.bengkel.FOTO_AREA_SERVIS" class="foto" />
+                                    </div>
+                                    <div class="card-body">
+                                        <span class="card-text fw-bold">Foto Area Servis</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-if="props.bengkel.FOTO_AREA_TUNGGU" class="col-md-3 col-sm-3 col-12 mb-4 mb-md-0">
+                                <div class="card shadow">
+                                    <div class="card-img-top">
+                                        <img :src="props.bengkel.FOTO_AREA_TUNGGU" class="foto" />
+                                    </div>
+                                    <div class="card-body">
+                                        <span class="card-text fw-bold">Foto Area Tunggu</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-if="props.bengkel.FOTO_AREA_KASIR" class="col-md-3 col-sm-3 col-12 mb-4 mb-md-0">
+                                <div class="card shadow">
+                                    <div class="card-img-top">
+                                        <img :src="props.bengkel.FOTO_AREA_KASIR" class="foto" />
+                                    </div>
+                                    <div class="card-body">
+                                        <span class="card-text fw-bold">Foto Area Kasir</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="lokasi" class="bg-light py-5">
+                <div class="container">
+                    <div class="row text-center my-3">
+                        <div class="col-lg-12">
+                            <h2 class="display-5 fw-bolder text-center">
+                                Lokasi Bengkel
+                            </h2>
+                        </div>
+                        <div class="col-lg-12">
+                            <h5>{{ props.bengkel.ALAMAT }}</h5>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="col-md-12 col-lg-12 mt-3">
+                                <div class="card rounded shadow">
+                                    <iframe :src="alamatEncode" height="350" width="100%" allowfullscreen=""
+                                        loading="lazy"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="section colored" id="input-no-ponsel">
+                <div class="container">
+                    <div class="row mb-3">
+                        <div class="col-lg-12">
+                            <div class="center-heading">
+                                <h2 class="section-title fw-bolder">Masukkan No. Ponsel</h2>
+                            </div>
+                        </div>
+                        <div class="offset-lg-3 col-lg-6">
+                            <div class="text-center">
+                                <p>Voucher Akan di Kirimkan Ke Whatsapp berupa pesan dan link Barcode Diskon</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <h5 class="margin-bottom-30">Catatan : </h5>
+                            <div class="contact-text">
+                                <p>
+                                    Tunjukkan Barcode Kepada Kasir Saat Melakukan Servis Kendaraan Mu di Bengkel {{ props.bengkel.NAMA_BENGKEL }}
+                                </p>
+                                <p>
+                                    Voucher hanya berlaku jika kamu melakukan servis di Bengkel {{ props.bengkel.NAMA_BENGKEL }}
+                                    dengan menggunakan No. Ponsel yg sama ketika kamu memasukkannya
+                                </p>
+                            </div>
+                        </div>
+                        <!-- ***** Contact Text End ***** -->
 
-        <footer class=""></footer>
-
+                        <!-- ***** Contact Form Start ***** -->
+                        <div class="col-lg-8 col-md-6 col-sm-12">
+                            <div class="contact-form">
+                                <form id="contact" action="" method="get">
+                                    <div class="row">
+                                        <div class="col-lg-8 col-md-12 col-sm-12">
+                                            <fieldset>
+                                                <input name="name" type="text" class="form-control" id="no-ponsel"
+                                                    placeholder="No. Ponsel" required="">
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-lg-4 col-md-12 col-sm-12">
+                                            <fieldset>
+                                                <button type="submit" id="form-submit" class="btn main-button w-md-100">
+                                                    Klaim Voucher
+                                                </button>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- ***** Contact Form End ***** -->
+                    </div>
+                </div>
+            </section>
+            <footer class="bg-white py-4 mt-auto">
+                <div class="container px-5">
+                    <div class="text-center">
+                        <div class="small m-0">Copyright &copy; <a href="https://otomotives.com"
+                                class="text-decoration-none">otomotives 2023</a></div>
+                    </div>
+                </div>
+            </footer>
+        </main>
     </div>
 </template>
 
@@ -120,6 +238,4 @@ header.masthead {
     background-repeat: no-repeat;
     background-attachment: scroll;
     background-size: cover;
-}
-
-</style>
+}</style>
