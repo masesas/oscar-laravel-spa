@@ -1,12 +1,12 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
-import remove_preload from 'remove_preload.js';
+import removePreloads from 'remove_preload';
 
 
 export default defineConfig({
     plugins: [
-        remove_preload(),
+        removePreloads(),
         laravel({
             input: [
                 'resources/sass/app.scss',
