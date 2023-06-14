@@ -12,6 +12,8 @@ export default defineConfig({
                 'resources/js/app.js',
             ],
             refresh: true,
+            buildDirectory: '/var/www/otomotives.com/oscar/build',
+            publicDirectory: '/var/www/otomotives.com/oscar'
         }),
         vue({
             template: {
