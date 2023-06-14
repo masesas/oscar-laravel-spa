@@ -13,6 +13,7 @@ export default defineConfig({
             ],
             refresh: true,
             publicDirectory: '/public/',
+            buildDirectory: '/build/'
         }),
         vue({
             template: {
