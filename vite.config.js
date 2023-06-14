@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
-import remove_preload from '@/remove_preload.js';
+import remove_preload from 'remove_preload.js';
 
 
 export default defineConfig({
