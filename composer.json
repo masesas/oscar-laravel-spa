@@ -32,7 +32,13 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "exclude-from-classmap": [
+            "vendor/inertia/inertiajs-laravel/src/Response.php"
+        ],
+        "files": [
+            "app/Overrides/Response.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
