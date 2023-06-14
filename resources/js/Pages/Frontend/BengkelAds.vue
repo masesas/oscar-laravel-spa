@@ -35,7 +35,7 @@ const alamatEncode = iframeGoogle(encodeURIComponent(props.bengkel.ALAMAT + ', '
             <nav class="navbar sticky-top navbar-expand-lg navbar-light gradient-primary card shadow">
                 <div class="container px-5">
                     <a class="navbar-brand fw-bolder d-flex align-items-center" href="#!">
-                        <img class="logo" src="@/img/icon/bengkelPro.png" />
+                        <img class="logo" :src="$baseAssets + '/icon/bengkelPro.png'" />
                         <span class="mx-3 text-primary">{{ props.bengkel.NAMA_BENGKEL }}</span>
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -71,7 +71,7 @@ const alamatEncode = iframeGoogle(encodeURIComponent(props.bengkel.ALAMAT + ', '
                 <div class="container">
                     <div class="row gx-4 gx-lg-5 align-items-center my-5">
                         <div class="col-lg-7">
-                            <img class="img-fluid rounded mb-4 mb-lg-0" src="/img/banner/ads/banner_ads_sengkaling_md.png"
+                            <img class="img-fluid rounded mb-4 mb-lg-0" :src="$baseAssets + '/banner/ads/banner_ads_sengkaling_md.png'"
                                 alt="..." />
                         </div>
                         <div class="col-lg-5">
