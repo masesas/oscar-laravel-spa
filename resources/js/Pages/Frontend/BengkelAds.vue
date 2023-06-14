@@ -35,7 +35,7 @@ const alamatEncode = iframeGoogle(encodeURIComponent(props.bengkel.ALAMAT + ', '
             <nav class="navbar sticky-top navbar-expand-lg navbar-light gradient-primary card shadow">
                 <div class="container px-5">
                     <a class="navbar-brand fw-bolder d-flex align-items-center" href="#!">
-                        <img class="logo" src="/img/icon/bengkelPro.png" />
+                        <img class="logo" src="@/img/icon/bengkelPro.png" />
                         <span class="mx-3 text-primary">{{ props.bengkel.NAMA_BENGKEL }}</span>
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
