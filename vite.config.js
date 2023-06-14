@@ -12,8 +12,6 @@ export default defineConfig({
                 'resources/js/app.js',
             ],
             refresh: true,
-            publicDirectory: '/public/',
-            buildDirectory: '/build/',
         }),
         vue({
             template: {
