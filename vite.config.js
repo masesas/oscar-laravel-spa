@@ -18,7 +18,7 @@ export default defineConfig({
         vue({
             template: {
                 transformAssetUrls: {
-                    base: '/var/www/otomotives.com/oscar',
+                    base: null,
                     includeAbsolute: false,
                 },
             },
@@ -26,6 +26,7 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
+            '@': '/resources/js',
             vue: 'vue/dist/vue.esm-bundler.js',
         },
     },
