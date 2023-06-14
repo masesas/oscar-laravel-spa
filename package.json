@@ -5,6 +5,10 @@
         "build": "vite build"
     },
     "devDependencies": {
+
+    },
+    "dependencies": {
+        "@inertiajs/vue3": "^1.0.0",
         "@mdi/js": "^7.0.96",
         "@popperjs/core": "^2.11.6",
         "@vitejs/plugin-vue": "^3.0.1",
@@ -24,8 +28,5 @@
         "vite": "^3.0.0",
         "vue": "^3.2.37",
         "vue3-snackbar": "^2.1.7"
-    },
-    "dependencies": {
-        "@inertiajs/vue3": "^1.0.0"
     }
 }
