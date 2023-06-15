@@ -51,8 +51,6 @@ export const useStyleStore = defineStore('style', {
             {
                 document.documentElement.classList[this.darkMode ? 'add' : 'remove']('dark-scrollbars')
             }
-
-            console.log('LayoutAuthenticated', this.darkMode);
         }
     }
 })

@@ -89,9 +89,31 @@ $spacers: (0: 0,
     }
 }
 
-.w-md-100{
-    @media (max-width: 769px){
+.w-md-100 {
+    @media (max-width: 769px) {
         width: 100% !important;
     }
 }
 
+
+.section-overlay {
+    position: relative;
+
+    .overlay-loading {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 999999;
+        background-image: linear-gradient(to right, rgba(195, 178, 208, 0.288), rgb(239, 230, 245));
+    }
+}
+
+.md {
+    width: 50px !important;
+    height: 50px !important;
+    border: 10px dotted $primaryDark;
+    --#{$prefix}spinner-animation-speed: 1.30s;
+
+}

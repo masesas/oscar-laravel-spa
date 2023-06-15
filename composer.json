@@ -37,7 +37,8 @@
             "vendor/inertia/inertiajs-laravel/src/Response.php"
         ],
         "files": [
-            "app/Overrides/Response.php"
+            "app/Overrides/Response.php",
+            "app/helpers.php"
         ]
     },
     "autoload-dev": {

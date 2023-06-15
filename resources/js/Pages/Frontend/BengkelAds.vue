@@ -1,14 +1,16 @@
 <script setup>
-import { ref } from 'vue';
-import { Head, Link, useForm } from "@inertiajs/vue3"
+import { ref, onMounted } from 'vue';
+import { Head, Link, useForm, usePage } from "@inertiajs/vue3"
 import BaseButton from '@/Components/BaseButton.vue';
 import CardBox from "@/Components/CardBox.vue"
 import FormField from '@/Components/FormField.vue'
 import FormControl from '@/Components/FormControl.vue'
 import BaseButtons from '@/Components/BaseButtons.vue'
-import { mdiTicketPercent, mdiImage, mdiGoogleMaps } from '@mdi/js'
+import { mdiTicketPercent, mdiImage, mdiGoogleMaps, mdiCarCog } from '@mdi/js'
 import BaseIcon from '@/Components/BaseIcon.vue';
 import Waves from '@/Components/Waves.vue'
+import { useSnackbar } from "vue3-snackbar";
+import { Vue3Snackbar } from "vue3-snackbar";
 
 const props = defineProps({
     bengkel: {
@@ -17,16 +19,55 @@ const props = defineProps({
     },
 })
 
-
+const snackbar = useSnackbar();
 
 const form = useForm({
     _method: 'post',
-    name: '',
+    cid: '',
+    noPonsel: '',
 })
+
+const { pathname } = window.location
+const parseCid = (path) => path.substring(path.lastIndexOf('/') + 1)
+const isLoading = ref(false)
+
+function claimVoucher() {
+    isLoading.value = true
+    form.cid = parseCid(pathname)
+    form.post(route('bengkel.ads.claim_voucher'), {
+        preserveState: false,
+        preserveScroll: true,
+        onSuccess: () => {
+            form.reset()
+            isLoading.value = false
+            //console.log('post', usePage().props.flash)
+            if (usePage().props.flash.message)
+            {
+                snackbar.add({
+                    type: usePage().props.flash.type,
+                    text: usePage().props.flash.message,
+
+                })
+            }
+        },
+        onError: (error) => {
+            snackbar.add({
+                type: "error",
+                text: error,
+
+            })
+        }
+    })
+}
+
 const iframeGoogle = (alamat) => {
     return "https://maps.google.com/maps?q=" + alamat + "&t=&z=13&ie=UTF8&iwloc=&output=embed";
 }
 const alamatEncode = iframeGoogle(encodeURIComponent(props.bengkel.ALAMAT + ', ' + props.bengkel.KOTA_KABUPATEN + ' ' + props.bengkel.KODE_POS));
+
+onMounted(() => {
+
+})
 
 </script>
 <template>
@@ -46,9 +87,15 @@ const alamatEncode = iframeGoogle(encodeURIComponent(props.bengkel.ALAMAT + ', '
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link inline-icon fw-bold"  href="#voucher">
+                                <a class="nav-link inline-icon fw-bold" href="#voucher">
                                     <BaseIcon :path="mdiTicketPercent" />
                                     <span class="">Voucher</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link inline-icon fw-bold" href="#fasilitas">
+                                    <BaseIcon :path="mdiCarCog" />
+                                    <span>Fasilitas Bengkel</span>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -72,19 +119,41 @@ const alamatEncode = iframeGoogle(encodeURIComponent(props.bengkel.ALAMAT + ', '
                 <div class="container">
                     <div class="row gx-4 gx-lg-5 align-items-center my-5">
                         <div class="col-lg-7">
-                            <img class="img-fluid rounded mb-4 mb-lg-0" :src="$baseAssets + '/banner/ads/banner_ads_sengkaling_md.png'"
-                                alt="..." />
+                            <img class="card shadow-lg rounded-lg img-fluid rounded mb-4 mb-lg-0"
+                                :src="$baseAssets + '/banner/ads/banner_ads_sengkaling_md.png'" alt="..." />
                         </div>
                         <div class="col-lg-5">
                             <h1 class="fw-bolder text-center mb-3">Dapatkan Voucher Diskon Servis Dengan Memasukkan No.
                                 Ponsel
                             </h1>
-                            <a class="btn btn-primary rounded-full w-100" href="#input-no-ponsel">Klaim Voucher Servis Sekarang!</a>
+                            <a class="btn btn-primary rounded-full w-100" href="#input-no-ponsel">Klaim Voucher Servis
+                                Sekarang!</a>
                         </div>
                     </div>
                 </div>
             </section>
             <Waves />
+            <section id="fasilitas" class="section colored mb-3 p-5">
+                <div class="container">
+                    <div class="row text-center mt-5 my-3">
+                        <div class="col-lg-12">
+                            <h2 class="display-5 fw-bolder text-center text-black">
+                                Fasilitas {{ props.NAMA_BENGKEL }}
+                            </h2>
+                        </div>
+                        <div class="col-lg-12">
+                            <h5>Nikmati Kenyamanan dengan Fasilitas yg ada di {{ props.bengkel.NAMA_BENGKEL }}</h5>
+                        </div>
+                    </div>
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-lg-12 col-md-12 d-flex justify-content-center">
+                            <img class="card shadow-lg rounded-lg img-fluid rounded mb-4 mb-lg-0"
+                                :src="$baseAssets + '/banner/keuntungan_ahass_sengkaling_medium.png'" alt="..." />
+                        </div>
+                    </div>
+
+                </div>
+            </section>
             <section id="foto" class="bg-light py-5">
                 <div class="container">
                     <div class="row text-center mt-5 my-3">
@@ -165,7 +234,11 @@ const alamatEncode = iframeGoogle(encodeURIComponent(props.bengkel.ALAMAT + ', '
                     </div>
                 </div>
             </section>
-            <section class="section colored" id="input-no-ponsel">
+            <section class="section colored section-overlay" id="input-no-ponsel">
+                <div v-if="isLoading" class="overlay-loading d-flex align-items-center justify-content-center">
+                    <div class="spinner-border text-primary md">
+                    </div>
+                </div>
                 <div class="container">
                     <div class="row mb-3">
                         <div class="col-lg-12">
@@ -184,10 +257,12 @@ const alamatEncode = iframeGoogle(encodeURIComponent(props.bengkel.ALAMAT + ', '
                             <h5 class="margin-bottom-30">Catatan : </h5>
                             <div class="contact-text">
                                 <p>
-                                    Tunjukkan Barcode Kepada Kasir Saat Melakukan Servis Kendaraan Mu di Bengkel {{ props.bengkel.NAMA_BENGKEL }}
+                                    Tunjukkan Barcode Kepada Kasir Saat Melakukan Servis Kendaraan Mu di Bengkel {{
+                                        props.bengkel.NAMA_BENGKEL }}
                                 </p>
                                 <p>
-                                    Voucher hanya berlaku jika kamu melakukan servis di Bengkel {{ props.bengkel.NAMA_BENGKEL }}
+                                    Voucher hanya berlaku jika kamu melakukan servis di Bengkel {{
+                                        props.bengkel.NAMA_BENGKEL }}
                                     dengan menggunakan No. Ponsel yg sama ketika kamu memasukkannya
                                 </p>
                             </div>
@@ -197,12 +272,14 @@ const alamatEncode = iframeGoogle(encodeURIComponent(props.bengkel.ALAMAT + ', '
                         <!-- ***** Contact Form Start ***** -->
                         <div class="col-lg-8 col-md-6 col-sm-12">
                             <div class="contact-form">
-                                <form id="contact" action="" method="get">
+                                <form id="contact" @submit.prevent="claimVoucher">
                                     <div class="row">
                                         <div class="col-lg-8 col-md-12 col-sm-12">
                                             <fieldset>
-                                                <input name="name" type="text" class="form-control" id="no-ponsel"
-                                                    placeholder="No. Ponsel" required="">
+                                                <input v-model="form.noPonsel" type="text" class="form-control"
+                                                    id="no-ponsel" placeholder="No. Ponsel"
+                                                    onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57"
+                                                    required>
                                             </fieldset>
                                         </div>
                                         <div class="col-lg-4 col-md-12 col-sm-12">
@@ -228,6 +305,7 @@ const alamatEncode = iframeGoogle(encodeURIComponent(props.bengkel.ALAMAT + ', '
                     </div>
                 </div>
             </footer>
+            <vue3-snackbar bottom right :duration="10000"></vue3-snackbar>
         </main>
     </div>
 </template>
@@ -241,4 +319,5 @@ header.masthead {
     background-repeat: no-repeat;
     background-attachment: scroll;
     background-size: cover;
-}</style>
+}
+</style>

@@ -20,10 +20,9 @@ export default defineConfig({
         }),
         vue({
             template: {
-
                 transformAssetUrls: {
-                    base: 'https://otomotives.com/oscar',
-                    includeAbsolute: true,
+                    base: process.env.NODE_ENV !== 'production' ? null : 'https://otomotives.com/oscar',
+                    includeAbsolute: process.env.NODE_ENV === 'production',
                 },
             },
         }),
