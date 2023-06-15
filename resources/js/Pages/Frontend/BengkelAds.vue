@@ -75,7 +75,7 @@ onMounted(() => {
         <Head :title="props.bengkel.NAMA_BENGKEL" />
         <main class="flex-shrink-0">
             <nav class="navbar sticky-top navbar-expand-lg navbar-light gradient-primary card shadow">
-                <div class="container px-5">
+                <div class="container px-md-5">
                     <a class="navbar-brand fw-bolder d-flex align-items-center" href="#!">
                         <img class="logo" :src="$baseAssets + '/icon/bengkelPro.png'" />
                         <span class="mx-3 text-primary">{{ props.bengkel.NAMA_BENGKEL }}</span>
