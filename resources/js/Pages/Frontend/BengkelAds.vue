@@ -1,16 +1,14 @@
-<script setup>
-import { ref, onMounted } from 'vue';
-import { Head, Link, useForm, usePage } from "@inertiajs/vue3"
-import BaseButton from '@/Components/BaseButton.vue';
-import CardBox from "@/Components/CardBox.vue"
-import FormField from '@/Components/FormField.vue'
-import FormControl from '@/Components/FormControl.vue'
-import BaseButtons from '@/Components/BaseButtons.vue'
-import { mdiTicketPercent, mdiImage, mdiGoogleMaps, mdiCarCog } from '@mdi/js'
-import BaseIcon from '@/Components/BaseIcon.vue';
+<script setup lang="ts">
+import { ref, onMounted, computed, watch } from 'vue';
+import { useForm, usePage } from "@inertiajs/vue3"
 import Waves from '@/Components/Waves.vue'
 import { useSnackbar } from "vue3-snackbar";
-import { Vue3Snackbar } from "vue3-snackbar";
+import { useClaimVoucherStore } from "@/Stores/claimVoucher.js"
+import LayoutGoogleAds1 from '@/Layouts/LayoutGoogleAds1.vue';
+import { logging } from "@/Utils/logging"
+import { getLastPathUrl } from "@/Utils/url"
+import IClaimVoucherRequest from "@/Apis/Request/IClaimVoucherRequest"
+import { storeToRefs } from 'pinia'
 
 const props = defineProps({
     bengkel: {
@@ -21,18 +19,70 @@ const props = defineProps({
 
 const snackbar = useSnackbar();
 
-const form = useForm({
+const claimVoucherStore = useClaimVoucherStore()
+
+const { responseMessage } = storeToRefs(claimVoucherStore)
+
+const isLoading = computed(() => claimVoucherStore.isLoading)
+
+watch(
+    () => claimVoucherStore.responseMessage,
+    () => {
+        if (claimVoucherStore.responseMessage) {
+            snackbar.add({
+                type: claimVoucherStore.isError ? 'error' : 'success',
+                text: claimVoucherStore.responseMessage,
+            })
+        }
+    }
+)
+/* claimVoucherStore.$subscribe((mutation, state) => {
+    if (state.responseMessage) {
+        snackbar.add({
+            type: claimVoucherStore.isError ? 'error' : 'success',
+            text: claimVoucherStore.responseMessage,
+        })
+    }
+}) */
+
+/* const form = useForm({
     _method: 'post',
     cid: '',
     noPonsel: '',
+}) */
+
+const requestClaimVoucher = ref<IClaimVoucherRequest | null>(null)
+
+const form = ref({
+    cid: '',
+    noPonsel: ''
 })
 
-const { pathname } = window.location
-const parseCid = (path) => path.substring(path.lastIndexOf('/') + 1)
-const isLoading = ref(false)
+const iframeGoogle = (alamat) => {
+    return "https://maps.google.com/maps?q=" + alamat + "&t=&z=13&ie=UTF8&iwloc=&output=embed";
+}
+const alamatEncode = iframeGoogle(encodeURIComponent(props.bengkel.ALAMAT + ', ' + props.bengkel.KOTA_KABUPATEN + ' ' + props.bengkel.KODE_POS));
+
+const voucherClick = () => {
+    document.getElementById('voucher').scrollIntoView()
+}
+
+const fotoClick = () => {
+    document.getElementById('foto').scrollIntoView()
+}
+
+const fasilitasClick = () => {
+    document.getElementById('fasilitas').scrollIntoView()
+}
+
+const lokasiClick = () => {
+    document.getElementById('lokasi').scrollIntoView()
+}
 
 function claimVoucher() {
-    isLoading.value = true
+    form.value.cid = getLastPathUrl()
+    claimVoucherStore.submit(form.value)
+    /* isLoading.value = true
     form.cid = parseCid(pathname)
     form.post(route('bengkel.ads.claim_voucher'), {
         preserveState: false,
@@ -57,13 +107,8 @@ function claimVoucher() {
 
             })
         }
-    })
+    }) */
 }
-
-const iframeGoogle = (alamat) => {
-    return "https://maps.google.com/maps?q=" + alamat + "&t=&z=13&ie=UTF8&iwloc=&output=embed";
-}
-const alamatEncode = iframeGoogle(encodeURIComponent(props.bengkel.ALAMAT + ', ' + props.bengkel.KOTA_KABUPATEN + ' ' + props.bengkel.KODE_POS));
 
 onMounted(() => {
 
@@ -72,48 +117,8 @@ onMounted(() => {
 </script>
 <template>
     <div>
-        <Head :title="props.bengkel.NAMA_BENGKEL" />
-        <main class="flex-shrink-0">
-            <nav class="navbar sticky-top navbar-expand-lg navbar-light gradient-primary card shadow">
-                <div class="container px-md-5">
-                    <a class="navbar-brand fw-bolder d-flex align-items-center" href="#!">
-                        <img class="logo" :src="$baseAssets + '/icon/bengkelPro.png'" />
-                        <span class="mx-3 text-primary">{{ props.bengkel.NAMA_BENGKEL }}</span>
-                    </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation"><span
-                            class="navbar-toggler-icon"></span></button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link inline-icon fw-bold" href="#voucher">
-                                    <BaseIcon :path="mdiTicketPercent" />
-                                    <span class="">Voucher</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link inline-icon fw-bold" href="#fasilitas">
-                                    <BaseIcon :path="mdiCarCog" />
-                                    <span>Fasilitas Bengkel</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link inline-icon fw-bold" href="#foto">
-                                    <BaseIcon :path="mdiImage" />
-                                    <span>Foto Bengkel</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link inline-icon fw-bold" href="#lokasi">
-                                    <BaseIcon :path="mdiGoogleMaps" />
-                                    <span>Lokasi Bengkel</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+        <LayoutGoogleAds1 :namaBengkel="props.bengkel.NAMA_BENGKEL" @voucher-click="voucherClick" @foto-click="fotoClick"
+            @lokasi-click="lokasiClick" @fasilitas-click="fasilitasClick">
             <Waves class="rotate-180" />
             <section id="voucher" class="p-3 m-2">
                 <div class="container">
@@ -138,7 +143,7 @@ onMounted(() => {
                     <div class="row text-center mt-5 my-3">
                         <div class="col-lg-12">
                             <h2 class="display-5 fw-bolder text-center text-black">
-                                Fasilitas {{ props.NAMA_BENGKEL }}
+                                Fasilitas {{ props.bengkel.NAMA_BENGKEL }}
                             </h2>
                         </div>
                         <div class="col-lg-12">
@@ -226,7 +231,7 @@ onMounted(() => {
                         <div class="col-lg-12">
                             <div class="col-md-12 col-lg-12 mt-3">
                                 <div class="card rounded shadow">
-                                    <iframe :src="alamatEncode" height="350" width="100%" allowfullscreen=""
+                                    <iframe :src="alamatEncode" height="350" width="100%" allowfullscreen
                                         loading="lazy"></iframe>
                                 </div>
                             </div>
@@ -297,16 +302,7 @@ onMounted(() => {
                     </div>
                 </div>
             </section>
-            <footer class="bg-white py-4 mt-auto">
-                <div class="container px-5">
-                    <div class="text-center">
-                        <div class="small m-0">Copyright &copy; <a href="https://otomotives.com"
-                                class="text-decoration-none">otomotives 2023</a></div>
-                    </div>
-                </div>
-            </footer>
-            <vue3-snackbar bottom right :duration="10000"></vue3-snackbar>
-        </main>
+        </LayoutGoogleAds1>
     </div>
 </template>
 
