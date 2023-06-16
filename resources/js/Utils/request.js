@@ -2,9 +2,14 @@ import '@/bootstrap';
 import { logging } from './logging';
 // import { isLogged, setLogged } from '@/utils/auth';
 
-// Create axios instance
+let baseUrl = process.env.VUE_BASE_API
+if (process.env.NODE_ENV === 'production')
+{
+    baseUrl = "https://otomotives.com/oscar/api/v1"
+}
+
 const service = window.axios.create({
-    baseURL: process.env.VUE_BASE_API,
+    baseURL: baseUrl,
     timeout: 50000, // Request timeout
 });
 
@@ -15,7 +20,7 @@ service.interceptors.request.use(
         // if (token) {
         //   config.headers['Authorization'] = 'Bearer ' + isLogged(); // Set JWT token
         // }
-
+        console.log('process.env.', process.env)
         logging(config, 'axios config')
 
         return config;
