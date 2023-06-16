@@ -5,7 +5,7 @@ import { logging } from './logging';
 let baseUrl = process.env.VUE_BASE_API
 if (process.env.NODE_ENV === 'production')
 {
-    baseUrl = "https://otomotives.com/oscar/api/v1"
+    baseUrl = "https://otomotives.com/oscar/api"
 }
 
 const service = window.axios.create({
