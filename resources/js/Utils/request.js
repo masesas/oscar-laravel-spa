@@ -20,7 +20,6 @@ service.interceptors.request.use(
         // if (token) {
         //   config.headers['Authorization'] = 'Bearer ' + isLogged(); // Set JWT token
         // }
-        console.log('process.env.', process.env)
         logging(config, 'axios config')
 
         return config;
