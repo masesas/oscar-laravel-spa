@@ -11,6 +11,6 @@ export function claimVoucher(params) {
     return service({
         url: '/v1/bengkel/ads/claim-voucher',
         method: 'post',
-        params,
+        data: params,
     });
 }
