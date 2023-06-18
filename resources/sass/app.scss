@@ -115,5 +115,14 @@ $spacers: (0: 0,
     height: 50px !important;
     border: 10px dotted $primaryDark;
     --#{$prefix}spinner-animation-speed: 1.30s;
+}
 
+.img-big {
+    width: 75% !important;
+    margin: 5% 0 !important;
+
+    @media only screen and (max-width: 769px) {
+        width: 100% !important;
+        margin: auto !important;
+    }
 }

@@ -82,32 +82,6 @@ const lokasiClick = () => {
 function claimVoucher() {
     form.value.cid = getLastPathUrl()
     claimVoucherStore.submit(form.value)
-    /* isLoading.value = true
-    form.cid = parseCid(pathname)
-    form.post(route('bengkel.ads.claim_voucher'), {
-        preserveState: false,
-        preserveScroll: true,
-        onSuccess: () => {
-            form.reset()
-            isLoading.value = false
-            //console.log('post', usePage().props.flash)
-            if (usePage().props.flash.message)
-            {
-                snackbar.add({
-                    type: usePage().props.flash.type,
-                    text: usePage().props.flash.message,
-
-                })
-            }
-        },
-        onError: (error) => {
-            snackbar.add({
-                type: "error",
-                text: error,
-
-            })
-        }
-    }) */
 }
 
 onMounted(() => {
@@ -120,7 +94,7 @@ onMounted(() => {
         <LayoutGoogleAds1 :namaBengkel="props.bengkel.NAMA_BENGKEL" @voucher-click="voucherClick" @foto-click="fotoClick"
             @lokasi-click="lokasiClick" @fasilitas-click="fasilitasClick">
             <Waves class="rotate-180" />
-            <section id="voucher" class="p-3 m-2">
+            <section id="voucher" class="p-2 m-2">
                 <div class="container">
                     <div class="row gx-4 gx-lg-5 align-items-center my-5">
                         <div class="col-lg-7">
@@ -138,7 +112,7 @@ onMounted(() => {
                 </div>
             </section>
             <Waves />
-            <section id="fasilitas" class="section colored mb-3 p-5">
+            <section id="fasilitas" class="section colored mb-3 p-2">
                 <div class="container">
                     <div class="row text-center mt-5 my-3">
                         <div class="col-lg-12">
@@ -152,11 +126,10 @@ onMounted(() => {
                     </div>
                     <div class="row align-items-center justify-content-center">
                         <div class="col-lg-12 col-md-12 d-flex justify-content-center">
-                            <img class="card shadow-lg rounded-lg img-fluid rounded mb-4 mb-lg-0"
+                            <img class="card shadow-lg rounded-lg img-big rounded mb-4 mb-lg-0"
                                 :src="$baseAssets + '/banner/keuntungan_ahass_sengkaling_medium.png'" alt="..." />
                         </div>
                     </div>
-
                 </div>
             </section>
             <section id="foto" class="bg-light py-5">

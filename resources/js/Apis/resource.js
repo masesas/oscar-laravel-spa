@@ -3,7 +3,7 @@ import service from '@/Utils/request';
 class Resource {
     constructor(uri) {
         this.version = 'v1'
-        this.uri = version + '/' + uri;
+        this.uri = this.version + '/' + uri;
     }
     get(path = '') {
         const finalPath = path ? '/' + path : ''
