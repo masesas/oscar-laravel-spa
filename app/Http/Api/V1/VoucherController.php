@@ -35,6 +35,7 @@ class VoucherController extends BaseApiController{
             BarcodeDiscount::query()->insert([
                 'CID' => $request->cid,
                 'JENIS_QR_CODE' => 'GOOGLE ADS',
+                'NAMA_LAYANAN' => 'SERVIS LENGKAP',
                 'QR_CODE' => $qrCode,
                 'PELANGGAN_ID' => $noPonsel,
                 'MESSAGE_NOTIFIKASI' => $message,
