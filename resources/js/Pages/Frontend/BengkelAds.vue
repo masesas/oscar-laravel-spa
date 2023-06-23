@@ -9,6 +9,7 @@ import { logging } from "@/Utils/logging"
 import { getLastPathUrl } from "@/Utils/url"
 import IClaimVoucherRequest from "@/Apis/Request/IClaimVoucherRequest"
 import { storeToRefs } from 'pinia'
+import { event } from 'vue-gtag'
 
 const props = defineProps({
     bengkel: {
@@ -34,6 +35,8 @@ watch(
                 type: claimVoucherStore.isError ? 'error' : 'success',
                 text: claimVoucherStore.responseMessage,
             })
+
+            event('conversion', { 'send_to': 'AW-11226084301/vHVnCNDn9K0YEM3ngekp' })
         }
     }
 )
@@ -87,17 +90,7 @@ function claimVoucher() {
 }
 
 onMounted(() => {
-    let recaptchaScript = document.createElement('script')
-    recaptchaScript.setAttribute('src', "https://www.googletagmanager.com/gtag/js?id=AW-11226084301")
-    document.head.appendChild(recaptchaScript)
 
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date()); gtag('config', 'AW-11226084301');
 })
 
 </script>

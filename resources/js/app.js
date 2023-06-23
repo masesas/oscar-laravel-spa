@@ -13,6 +13,7 @@ import { createInertiaApp, router } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import { SnackbarService } from "vue3-snackbar";
+import VueGtag from "vue-gtag";
 import "vue3-snackbar/styles";
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Oscar';
@@ -38,6 +39,10 @@ createInertiaApp({
         myApp.use(pinia)
         myApp.use(ZiggyVue, Ziggy)
         myApp.use(SnackbarService)
+        myApp.use(VueGtag, {
+            config: { id: "AW-11226084301" }
+        })
+
         myApp.mount(el);
 
         return myApp;
