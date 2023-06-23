@@ -28,14 +28,15 @@ class VoucherController extends BaseApiController{
                 throw new \Exception("Kamu masih memiliki Voucher Aktif yg belum di gunakan, Lakukan servis di bengkel $bengkel->NAMA_BENGKEL untuk mendapatkan voucher discount yg lain", 400);
             }
 
+            $namaLayanan = !empty($request->namaLayanan) ? $request->namaLayanan : 'SERVIS LENGKAP + CUCI';
             $discount = '20';
             $qrCode = md5(date('Y-m-d h:i:sa') . $noPonsel . rand()) . md5(rand() . date('Y-m-d h:i:sa') . rand() . $noPonsel);
-            $message = $messageTemplate->discGoogleAds($bengkel->NAMA_BENGKEL, 'SERVIS LENGKAP', $discount, $qrCode);
+            $message = $messageTemplate->discGoogleAds($bengkel->NAMA_BENGKEL, $namaLayanan, $discount, $qrCode);
 
             BarcodeDiscount::query()->insert([
                 'CID' => $request->cid,
                 'JENIS_QR_CODE' => 'GOOGLE ADS',
-                'NAMA_LAYANAN' => 'SERVIS LENGKAP',
+                'NAMA_LAYANAN' => $namaLayanan,
                 'QR_CODE' => $qrCode,
                 'PELANGGAN_ID' => $noPonsel,
                 'MESSAGE_NOTIFIKASI' => $message,

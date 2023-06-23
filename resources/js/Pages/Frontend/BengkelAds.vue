@@ -28,7 +28,8 @@ const isLoading = computed(() => claimVoucherStore.isLoading)
 watch(
     () => claimVoucherStore.responseMessage,
     () => {
-        if (claimVoucherStore.responseMessage) {
+        if (claimVoucherStore.responseMessage)
+        {
             snackbar.add({
                 type: claimVoucherStore.isError ? 'error' : 'success',
                 text: claimVoucherStore.responseMessage,
@@ -51,11 +52,12 @@ watch(
     noPonsel: '',
 }) */
 
-const requestClaimVoucher = ref<IClaimVoucherRequest | null>(null)
+const requestClaimVoucher = ref < IClaimVoucherRequest | null > (null)
 
 const form = ref({
     cid: '',
-    noPonsel: ''
+    noPonsel: '',
+    namaLayanan: 'SERVIS LENGKAP + CUCI'
 })
 
 const iframeGoogle = (alamat) => {
@@ -85,7 +87,17 @@ function claimVoucher() {
 }
 
 onMounted(() => {
+    let recaptchaScript = document.createElement('script')
+    recaptchaScript.setAttribute('src', "https://www.googletagmanager.com/gtag/js?id=AW-11226084301")
+    document.head.appendChild(recaptchaScript)
 
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date()); gtag('config', 'AW-11226084301');
 })
 
 </script>
