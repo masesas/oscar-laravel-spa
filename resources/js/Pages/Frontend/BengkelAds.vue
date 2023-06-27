@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue';
-import { useForm, usePage } from "@inertiajs/vue3"
+import { useForm, usePage, Head } from "@inertiajs/vue3"
 import Waves from '@/Components/Waves.vue'
 import { useSnackbar } from "vue3-snackbar";
 import { useClaimVoucherStore } from "@/Stores/claimVoucher.js"
@@ -96,6 +96,11 @@ onMounted(() => {
 </script>
 <template>
     <div>
+        <Head>
+            <title>{{ props.bengkel.NAMA_BENGKEL }}</title>
+            <meta head-key="description" name="description" :content="'Bengkel ' + props.bengkel.NAMA_BENGKEL" />
+            <link rel="icon" type="image/svg+xml" :href="props.bengkel.LOGO" />
+        </Head>
         <LayoutGoogleAds1 :namaBengkel="props.bengkel.NAMA_BENGKEL" @voucher-click="voucherClick" @foto-click="fotoClick"
             @lokasi-click="lokasiClick" @fasilitas-click="fasilitasClick">
             <Waves class="rotate-180" />
