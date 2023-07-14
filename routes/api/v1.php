@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Api\V1\VoucherController;
+use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\VoucherController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,3 +18,18 @@ Route::group([
         Route::post('claim-voucher', [VoucherController::class, 'claimVoucherGoogleAds']);
     });
 });
+
+
+Route::group([
+    'middleware' => ['api'],
+], function () {
+
+    Route::group([
+        'prefix' => 'auth',
+    ], function () {
+        Route::post('login', [AuthController::class, 'login']);
+    });
+});
+
+
+

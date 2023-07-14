@@ -7,10 +7,22 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
-{
+
+class User extends Authenticatable implements JWTSubject {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
+
+    protected $connection = 'mysql_oto';
+
+    protected $table = "USER_WEB_INTERNAL";
+
+    public $timestamps = false;
+
+    protected $primaryKey = 'ID';
+
+    public $incrementing = false;
+
 
     /**
      * The attributes that are mass assignable.
@@ -18,10 +30,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        /* 'name',
         'email',
-        'password',
-    ];
+        'password', */];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -29,9 +40,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+        /* 'password',
+        'remember_token', */];
 
     /**
      * The attributes that should be cast.
@@ -39,6 +49,29 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        //'email_verified_at' => 'datetime',
     ];
+
+    public function getJWTIdentifier() {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims() {
+        return [];
+    }
+
+    public function getAuthPassword() {
+        return $this->PASSWORD;
+    }
+
+    //code here
+    public function getEmailAttribute() {
+        return $this->USERNAME;
+    }
+
+    public function setEmailAttribute($value) {
+        $this->attributes['USERNAME'] = strtoupper($value);
+    }
+
+    
 }

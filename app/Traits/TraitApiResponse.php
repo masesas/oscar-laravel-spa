@@ -5,6 +5,7 @@ namespace App\Traits;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 trait TraitApiResponse {
 
@@ -22,11 +23,13 @@ trait TraitApiResponse {
     }
 
     public function successResponse($result, $message = '', $token = ''): JsonResponse {
-        if ($token != '') {
+        if (!empty($token)) {
             $response = [
                 'status'  => true,
                 'message' => empty($message) ? 'Successfuly.' : $message,
                 'token'   => $token,
+                'token_type' => 'bearer',
+                'expires_in' => auth('api')->factory()->getTTL(),
                 'data'    => $result,
             ];
         } else {

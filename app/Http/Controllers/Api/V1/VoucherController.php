@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Api\V1;
+namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Api\BaseApiController;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ClaimVoucherRequest;
 use App\Models\BengkelPro\BarcodeDiscount;
 use App\Models\BengkelPro\BengkelModel;
@@ -10,7 +10,7 @@ use App\Models\MessageTemplate;
 use DB;
 use Throwable;
 
-class VoucherController extends BaseApiController{
+class VoucherController extends Controller{
 
     public function claimVoucherGoogleAds(ClaimVoucherRequest $request) {
         DB::beginTransaction();
