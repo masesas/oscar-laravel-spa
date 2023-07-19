@@ -10,9 +10,10 @@ use App\Models\MessageTemplate;
 use DB;
 use Throwable;
 
-class VoucherController extends Controller{
-
-    public function claimVoucherGoogleAds(ClaimVoucherRequest $request) {
+class VoucherController extends Controller
+{
+    public function claimVoucherGoogleAds(ClaimVoucherRequest $request)
+    {
         DB::beginTransaction();
         try {
             $noPonsel = format_no_ponsel_62($request->noPonsel);
@@ -42,16 +43,20 @@ class VoucherController extends Controller{
                 'MESSAGE_NOTIFIKASI' => $message,
                 'MESSAGE_WHATSAPP' => $message,
                 'DISCOUNT_PERCENT' => $discount,
-                'CREATED_DATE' => DB::raw('NOW()')
+                'TANGGAL_EXPIRED' => date('Y-m-d', strtotime('+1 month ' . date('Y-m-d'))),
+                'IS_ALL_LAYANAN' => 1,
+                'IS_JASA_PART' => 1,
+                'IS_JASA_LAIN' => 1,
+                'CREATED_DATE' => DB::raw('NOW()'),
             ]);
 
-            DB::connection('mysql_oto')->table('TASK_QUEUE')->insert([
+            /* DB::connection('mysql_oto')->table('TASK_QUEUE')->insert([
                 'TASK' => json_encode([
                     'action' => 'SEND MESSAGE',
                     'message' => $message,
                     'noPonsel' => $noPonsel
                 ]),
-            ]);
+            ]); */
 
             DB::commit();
 

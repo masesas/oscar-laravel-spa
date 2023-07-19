@@ -23,7 +23,7 @@ defineProps({
                     Log in
                     </Link>
                 </template>
-                <Link :href="route('bengkel.ads.index', '0ae85b7d-d843-11eb-b18a-2cea7f647529')" class="btn btn-primary">
+                <Link :href="route('bengkel.ads.', '0ae85b7d-d843-11eb-b18a-2cea7f647529')" class="btn btn-primary">
                 Bengkel
                 </Link>
             </div>

@@ -11,19 +11,29 @@ use Illuminate\Routing\Controller;
 use Inertia\Inertia;
 use Throwable;
 
-class BengkelAdsController extends Controller {
-    public function __construct() {
+class BengkelAdsController extends Controller
+{
+    public function __construct()
+    {
     }
 
-    public function index($cid) {
-        $bengkel = BengkelModel::query()->where('CID', $cid)->first();
+    public function index($cid)
+    {
+        $bengkel = BengkelModel::query()
+            ->select('*')
+            ->selectRaw("'SERVIS LENGKAP + CUCI' AS NAMA_LAYANAN")
+            ->where('CID', $cid)
+            ->first();
 
         return Inertia::render('Frontend/BengkelAds', [
             'bengkel' => $bengkel
         ]);
     }
 
-    public function claimVoucher(ClaimVoucherRequest $request) {
+    public function claimVoucherStore(ClaimVoucherRequest $request)
+    {
+        $clientIP = request()->ip();
+
         DB::beginTransaction();
         try {
             $noPonsel = format_no_ponsel_62($request->noPonsel);
@@ -51,16 +61,20 @@ class BengkelAdsController extends Controller {
                 'MESSAGE_NOTIFIKASI' => $message,
                 'MESSAGE_WHATSAPP' => $message,
                 'DISCOUNT_PERCENT' => $discount,
+                'TANGGAL_EXPIRED' => date('Y-m-d', strtotime('+1 month ' . date('Y-m-d'))),
+                'IS_ALL_LAYANAN' => 1,
+                'IS_JASA_PART' => 1,
+                'IS_JASA_LAIN' => 1,
                 'CREATED_DATE' => DB::raw('NOW()')
             ]);
 
-            DB::connection('mysql_oto')->table('TASK_QUEUE')->insert([
+            /* DB::connection('mysql_oto')->table('TASK_QUEUE')->insert([
                 'TASK' => json_encode([
                     'action' => 'SEND MESSAGE',
                     'message' => $message,
                     'noPonsel' => $noPonsel
                 ]),
-            ]);
+            ]); */
 
             DB::commit();
 

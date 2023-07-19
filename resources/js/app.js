@@ -15,6 +15,8 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import { SnackbarService } from "vue3-snackbar";
 import VueGtag from "vue-gtag";
 import "vue3-snackbar/styles";
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Oscar';
 
@@ -32,9 +34,7 @@ createInertiaApp({
         const myApp = createApp({ render: () => h(App, props) });
         const assets = process.env.NODE_ENV != 'production' ? '/img' : 'https://otomotives.com/oscar/img';
 
-        myApp.config.globalProperties.$route = route
-        myApp.config.globalProperties.$baseAssets = assets;
-
+        myApp.use(VueSweetalert2)
         myApp.use(plugin)
         myApp.use(pinia)
         myApp.use(ZiggyVue, Ziggy)
@@ -42,6 +42,11 @@ createInertiaApp({
         myApp.use(VueGtag, {
             config: { id: "AW-11226084301" }
         })
+
+        myApp.config.globalProperties.$route = route
+        myApp.config.globalProperties.$baseAssets = assets
+        
+        window.Swal = myApp.config.globalProperties.$swal
 
         myApp.mount(el);
 

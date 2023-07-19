@@ -19,7 +19,7 @@ Route::group([
         ], function(){
             Route::get('{cid}', [BengkelAdsController::class, 'index']);
 
-            Route::post('claim-voucher', [BengkelAdsController::class, 'claimVoucher'])->name('claim_voucher');
+            Route::post('claim-voucher', [BengkelAdsController::class, 'claimVoucherStore'])->name('claim_voucher');
         });
     });
 });

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { ref, onMounted, computed, watch } from 'vue';
 import { useForm, usePage, Head } from "@inertiajs/vue3"
 import Waves from '@/Components/Waves.vue'
@@ -7,9 +7,10 @@ import { useClaimVoucherStore } from "@/Stores/claimVoucher.js"
 import LayoutGoogleAds1 from '@/Layouts/LayoutGoogleAds1.vue';
 import { logging } from "@/Utils/logging"
 import { getLastPathUrl } from "@/Utils/url"
-import IClaimVoucherRequest from "@/Apis/Request/IClaimVoucherRequest"
+//import IClaimVoucherRequest from "@/Apis/Request/IClaimVoucherRequest"
 import { storeToRefs } from 'pinia'
 import { event } from 'vue-gtag'
+import ModalQRCodeVoucher from '@/Components/ModalQRCodeVoucher.vue';
 
 const props = defineProps({
     bengkel: {
@@ -55,13 +56,15 @@ watch(
     noPonsel: '',
 }) */
 
-const requestClaimVoucher = ref < IClaimVoucherRequest | null > (null)
+//const requestClaimVoucher = ref<IClaimVoucherRequest | null>(null)
 
 const form = ref({
     cid: '',
     noPonsel: '',
     namaLayanan: 'SERVIS LENGKAP + CUCI'
 })
+
+let modalVoucher = ref(null)
 
 const iframeGoogle = (alamat) => {
     return "https://maps.google.com/maps?q=" + alamat + "&t=&z=13&ie=UTF8&iwloc=&output=embed";
@@ -89,6 +92,10 @@ function claimVoucher() {
     claimVoucherStore.submit(form.value)
 }
 
+function showVoucher() {
+    modalVoucher.value.show()
+}
+
 onMounted(() => {
 
 })
@@ -96,6 +103,7 @@ onMounted(() => {
 </script>
 <template>
     <div>
+
         <Head>
             <title>{{ props.bengkel.NAMA_BENGKEL }}</title>
             <meta head-key="description" name="description" :content="'Bengkel ' + props.bengkel.NAMA_BENGKEL" />
@@ -115,8 +123,9 @@ onMounted(() => {
                             <h1 class="fw-bolder text-center mb-3">Dapatkan Voucher Diskon Servis Dengan Memasukkan No.
                                 Ponsel
                             </h1>
-                            <a class="btn btn-primary rounded-full w-100" href="#input-no-ponsel">Klaim Voucher Servis
-                                Sekarang!</a>
+                            <button type="button" class="btn btn-primary rounded-full w-100"
+                                @click.prevent="showVoucher">Klaim Voucher Servis
+                                Sekarang!</button>
                         </div>
                     </div>
                 </div>
@@ -222,7 +231,7 @@ onMounted(() => {
                     </div>
                 </div>
             </section>
-            <section class="section colored section-overlay" id="input-no-ponsel">
+            <section v-if="false" class="section colored section-overlay" id="input-no-ponsel">
                 <div v-if="isLoading" class="overlay-loading d-flex align-items-center justify-content-center">
                     <div class="spinner-border text-primary md">
                     </div>
@@ -285,6 +294,12 @@ onMounted(() => {
                     </div>
                 </div>
             </section>
+            <ModalQRCodeVoucher :qr-value="'khesa alvandi sembodo'" ref="modalVoucher"
+                :qr-desc="`Diskon Servis 20% untuk Layanan ${bengkel.NAMA_LAYANAN}`" :data-bengkel="bengkel">
+                <template #content>
+                    <p class="">tunjukan qr-code kepada kasir saat melakukan pembayaran untuk menggunakan diskon</p>
+                </template>
+            </ModalQRCodeVoucher>
         </LayoutGoogleAds1>
     </div>
 </template>
