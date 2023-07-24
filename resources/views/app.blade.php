@@ -11,7 +11,7 @@
     <link rel="icon" href="{{ url('img/icon/oto.png') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ URL::to('img/icon/oto.png') }}" />
 
-    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" type="text/css">
+    {{-- <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" type="text/css"> --}}
 
     <title inertia>{{ config('app.name', 'Oscar') }}</title>
 

@@ -5,7 +5,10 @@
 @import 'waves';
 
 html * {
-    font-family: 'Poppins', 'Courier New', Courier, monospace;
+    font-family: Poppins,
+    'Courier New',
+    Courier,
+    monospace;
 }
 
 $spacer: 1rem;
