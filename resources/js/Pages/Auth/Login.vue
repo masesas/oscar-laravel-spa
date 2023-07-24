@@ -55,7 +55,7 @@ const submit = () => {
         <SectionFullScreen v-slot="{ cardClass }" bg="bg-purple-800" style-class="flex-col space-y-3">
             <div class="max-w-7xl mx-auto p-6 lg:p-8">
                 <div class="flex justify-center">
-                    <img src="/img/icon/oscar.png" height="200" width="500" />
+                    <img src="" height="200" width="500" />
                 </div>
             </div>
 

@@ -32,7 +32,7 @@ defineProps({
         <div class="container">
             <div class="row vh-100 align-items-center">
                 <div class="text-center d-flex align-items-center justify-content-center">
-                    <img src="/img/icon/oscar.png" height="200" width="500" />
+                    <img :src="$baseAssets + '/icon/oscar.png'" height="200" width="500" />
                 </div>
             </div>
 

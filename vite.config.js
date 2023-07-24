@@ -12,6 +12,9 @@ export default ({ mode }) => {
         },
         build: {
             modulePreload: false,
+            rollupOptions: {
+
+            }
         },
         plugins: [
             removePreloads(),
@@ -37,6 +40,8 @@ export default ({ mode }) => {
             alias: {
                 '@': '/resources/js',
                 vue: 'vue/dist/vue.esm-bundler.js',
+                $fonts: 'public/fonts',
+                $img: 'public/img'
             },
         },
     });
