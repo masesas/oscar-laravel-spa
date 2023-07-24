@@ -36,6 +36,9 @@ createInertiaApp({
         const myApp = createApp({ render: () => h(App, props) });
         const assets = process.env.NODE_ENV != 'production' ? '/img' : 'https://otomotives.com/oscar/img';
 
+        const fontAssets = process.env.NODE_ENV != 'production' ? '/fonts' : 'https://otomotives.com/oscar/fonts';
+        loadFont("Poppins", fontAssets + "/PoppinsMedium.otf")
+        
         myApp.use(VueSweetalert2)
         myApp.use(plugin)
         myApp.use(pinia)
@@ -55,8 +58,7 @@ createInertiaApp({
         return myApp;
     },
 }).then(r => {
-    const assets = process.env.NODE_ENV != 'production' ? '/fonts' : 'https://otomotives.com/oscar/fonts';
-    loadFont("Poppins", assets + "/PoppinsMedium.otf")
+
 })
 
 const styleStore = useStyleStore(pinia)
