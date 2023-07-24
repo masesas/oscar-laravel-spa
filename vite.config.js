@@ -42,7 +42,8 @@ export default ({ mode }) => {
                 vue: 'vue/dist/vue.esm-bundler.js',
                 $fonts: 'public/fonts',
                 $img: 'public/img',
-                'ziggy-vue': '/vendor/tightenco/ziggy/src/js/vue',
+                'ziggy': '/vendor/tightenco/ziggy/dist',
+                'ziggy-vue': '/vendor/tightenco/ziggy/src/js/vue'
             },
         },
     });
