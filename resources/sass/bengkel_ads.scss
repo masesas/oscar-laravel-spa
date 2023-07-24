@@ -147,9 +147,14 @@ nav {
     position: relative;
 }
 
-.banner .loading {
+.banner a{
+    text-decoration: underline !important;
+}
+
+.loading {
     position: absolute;
-    display: flex;
+    display: inline-block;
+    vertical-align: middle;
     align-items: center;
     justify-content: center;
     z-index: 9999;
@@ -187,7 +192,7 @@ nav {
         position: absolute;
         display: flex;
         justify-content: end;
-        bottom: 4.2%;
+        bottom: 5.3%;
         left: 21%;
         font-size: 0.65rem;
         width: auto;
@@ -211,7 +216,7 @@ nav {
         position: absolute;
         display: flex;
         justify-content: end;
-        bottom: 4%;
+        bottom: 3%;
         left: 16%;
         font-size: 0.65rem;
         width: auto;
@@ -239,9 +244,9 @@ nav {
         position: absolute;
         display: flex;
         justify-content: end;
-        bottom: 10.5%;
-        left: 15%;
-        font-size: 0.8rem;
+        bottom: 10%;
+        left: 16%;
+        font-size: 1.5rem;
         width: auto;
         height: auto;
     }
@@ -250,9 +255,9 @@ nav {
         position: absolute;
         display: flex;
         justify-content: end;
-        bottom: 3.8%;
-        left: 15%;
-        font-size: 0.8rem;
+        bottom: 2.5%;
+        left: 16%;
+        font-size: 1.5rem;
         width: auto;
         height: auto;
     }

@@ -165,8 +165,12 @@ onMounted(() => {
 
 </script>
 <template>
-    <div>
-
+    <div class="position-relative">
+        <div v-if="loadingClaim" class="loading">
+            <div class="centered">
+                <span class="spinner-border text-white" style="width: 3rem; height: 3rem;"></span>
+            </div>
+        </div>
         <Head>
             <title>{{ namaBengkel }}</title>
             <meta head-key="description" name="description" :content="'Bengkel ' + ucwords(props.bengkel.NAMA_BENGKEL)" />
@@ -181,11 +185,8 @@ onMounted(() => {
                         <div class="col mb-3">
                             <div class="banner justify-content-center align-items-center">
                                 <div class="card shadow-lg rounded-lg">
-                                    <img class="img-fluid" :src="isMobile ? $baseAssets + '/banner/ads/disc_2_600_1200.png'
-                                        : $baseAssets + '/banner/ads/disc_2_600_700.png'" alt="banner" />
-                                    <div v-if="loadingClaim" class="loading">
-                                        <div class="spinner-border text-white"></div>
-                                    </div>
+                                    <img class="img-fluid" :src="isMobile ? $baseAssets + '/banner/ads/disc_md.png'
+                                        : $baseAssets + '/banner/ads/disc_lg.png'" alt="banner" />
                                 </div>
                                 <a href="#" class="claim" @click.prevent="showVoucher"></a>
                                 <a href="#" class="address text-white" @click.prevent="lokasiClick">
@@ -395,7 +396,7 @@ onMounted(() => {
                 :qr-desc="`Diskon Servis 20% di ${namaBengkel}\nGunakan Diskon Sebelum Tanggal ${tglExpiredVoucher}`"
                 :data-bengkel="bengkel">
                 <template #content>
-                    <p class="text-muted">
+                    <p class="text-danger">
                         *Salin Link atau Screenshot Voucher Diskon
                     </p>
                 </template>
@@ -414,6 +415,4 @@ header.masthead {
     background-attachment: scroll;
     background-size: cover;
 }
-
-
 </style>
