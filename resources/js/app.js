@@ -17,6 +17,7 @@ import VueGtag from "vue-gtag";
 import "vue3-snackbar/styles";
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import 'vue3-carousel/dist/carousel.css';
 import { loadFont } from './Utils/formating-utils';
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Oscar';
@@ -38,7 +39,7 @@ createInertiaApp({
 
         const fontAssets = process.env.NODE_ENV != 'production' ? '/fonts' : 'https://otomotives.com/oscar/fonts';
         loadFont("Poppins", fontAssets + "/PoppinsMedium.otf")
-        
+
         myApp.use(VueSweetalert2)
         myApp.use(plugin)
         myApp.use(pinia)
