@@ -160,7 +160,7 @@ const items = [
 ];
 
 onMounted(() => {
-    
+
 })
 
 </script>
@@ -404,7 +404,7 @@ onMounted(() => {
     </div>
 </template>
 
-<style lang="css" scoped>
+<style lang="css">
 header.masthead {
     padding-top: 10rem;
     padding-bottom: calc(10rem - 4.5rem);

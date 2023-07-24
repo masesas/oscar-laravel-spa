@@ -32,7 +32,7 @@ defineProps({
         </div>
     </div>
 </template>
-<style scoped>
+<style lang="css">
 .review-container {
     width: 100%;
     height: 50px;
