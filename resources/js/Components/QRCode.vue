@@ -18,11 +18,16 @@ const options = {}
     <div class="text-center">
         <div class="row row-cols-1">
             <div class="col mb-3">
-                <QRCodeVue3 :value="value" :width="200" :height="200" :image="`${$baseAssets}/icon/bengkelPro.png`"
+                <QRCodeVue3
+                :value="value"
+                :width="200"
+                :height="200"
+                :image="`${$baseAssets}/icon/bengkelPro.png`"
                 :qrOptions="{ typeNumber: '0', mode: 'Byte', errorCorrectionLevel: 'Q' }"
                 :imageOptions="{ hideBackgroundDots: true, imageSize: 0.4, margin: 0 }"
                 :dotsOptions="{ type: 'square', color: '#05004d' }"
-                :cornersSquareOptions="{ type: 'square', color: '#0e013c' }" />
+                :cornersSquareOptions="{ type: 'square', color: '#0e013c' }"
+                />
             </div>
             <div class="col">
                 <p> {{ desc }} </p>

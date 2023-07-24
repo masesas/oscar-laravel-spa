@@ -11,7 +11,9 @@ import { darkModeKey, styleKey } from '@/config.js'
 import { createApp, h } from 'vue';
 import { createInertiaApp, router } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
+// import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
+import { ZiggyVue } from 'ziggy-vue';
+import { Ziggy } from './ziggy';
 import { SnackbarService } from "vue3-snackbar";
 import VueGtag from "vue-gtag";
 import "vue3-snackbar/styles";
@@ -59,7 +61,7 @@ createInertiaApp({
         return myApp;
     },
 }).then(r => {
-
+    console.log(route('bengkel.ads.', {cid : 'asd'}))
 })
 
 const styleStore = useStyleStore(pinia)
