@@ -20,14 +20,14 @@ class ClaimVoucherRequest extends FormRequest {
     public function rules(): array {
         return [
             'cid' => ['required', 'string'],
-            'noPonsel' => ['required', 'string',],
+            //'noPonsel' => ['required', 'string',],
         ];
     }
 
     public function messages(): array {
         return [
             'cid.required' => 'Bengkel Tidak Valid',
-            'noPonsel.required' => 'No. Ponsel Tidak Valid'
+            //'noPonsel.required' => 'No. Ponsel Tidak Valid'
         ];
     }
 }

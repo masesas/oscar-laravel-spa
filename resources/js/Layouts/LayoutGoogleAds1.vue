@@ -32,9 +32,9 @@ const lokasiClick = (event) => {
 <template>
     <div class="">
         <Head :title="namaBengkel" />
+        <Navbar1 :title="namaBengkel" @voucher-click="voucherClick" @foto-click="fotoClick" @lokasi-click="lokasiClick"
+                    @fasilitas-click="fasilitasClick" />
         <main class="flex-shrink-0">
-            <Navbar1 :title="namaBengkel" @voucher-click="voucherClick" @foto-click="fotoClick" @lokasi-click="lokasiClick"
-                @fasilitas-click="fasilitasClick" />
             <slot />
             <Footer1 />
         </main>

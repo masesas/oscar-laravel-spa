@@ -5,7 +5,7 @@
         <div class="container px-5">
             <div class="text-center">
                 <div class="small m-0">Copyright &copy; <a href="https://otomotives.com"
-                        class="text-decoration-none">otomotives 2023</a></div>
+                        class="text-decoration-none">BengkelPro@otomotives 2023</a></div>
             </div>
         </div>
     </footer>

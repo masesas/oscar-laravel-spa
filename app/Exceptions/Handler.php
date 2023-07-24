@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Log;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -82,6 +83,8 @@ class Handler extends ExceptionHandler
             // Return a JSON response with the response array and status code
             return response()->json($response, $status);
         }
+
+        Log::error('Error >>> '  . $e);
 
         // Default to the parent class' implementation of handler
         return parent::render($request, $e);

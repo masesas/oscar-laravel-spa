@@ -24,9 +24,10 @@ const pinia = createPinia()
 
 createInertiaApp({
     progress: {
-        color: '#4B5563',
-        showSpinner: true,
-
+        delat: 250,
+        color: '#6f42c1',
+        showSpinner: false,
+        includeCSS: true,
     },
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
@@ -45,7 +46,7 @@ createInertiaApp({
 
         myApp.config.globalProperties.$route = route
         myApp.config.globalProperties.$baseAssets = assets
-        
+
         window.Swal = myApp.config.globalProperties.$swal
 
         myApp.mount(el);

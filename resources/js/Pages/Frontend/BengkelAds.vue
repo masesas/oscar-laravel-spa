@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue';
+import { router } from '@inertiajs/vue3';
 import { useForm, usePage, Head } from "@inertiajs/vue3"
 import Waves from '@/Components/Waves.vue'
 import { useSnackbar } from "vue3-snackbar";
@@ -11,6 +12,10 @@ import { getLastPathUrl } from "@/Utils/url"
 import { storeToRefs } from 'pinia'
 import { event } from 'vue-gtag'
 import ModalQRCodeVoucher from '@/Components/ModalQRCodeVoucher.vue';
+import { ucwords } from '@/Utils/formating-utils';
+import Caraousel from "@/Components/Caraousel.vue"
+import { useScreenSize } from '../../Composable/screen_size';
+import { moveWaApi } from '@/Utils/url';
 
 const props = defineProps({
     bengkel: {
@@ -26,6 +31,18 @@ const claimVoucherStore = useClaimVoucherStore()
 const { responseMessage } = storeToRefs(claimVoucherStore)
 
 const isLoading = computed(() => claimVoucherStore.isLoading)
+
+const namaBengkel = computed(() => {
+    return ucwords(props.bengkel.NAMA_BENGKEL.toLowerCase());
+})
+
+const loadingClaim = ref(false);
+const qrValue = ref('')
+const doneClaim = ref(false)
+const countClaim = ref(0)
+const tglExpiredVoucher = ref('')
+
+const { isMobile } = useScreenSize();
 
 watch(
     () => claimVoucherStore.responseMessage,
@@ -93,8 +110,54 @@ function claimVoucher() {
 }
 
 function showVoucher() {
-    modalVoucher.value.show()
+    router.post(route('bengkel.ads.claim_voucher'), { cid: props.bengkel.CID }, {
+        preserveScroll: true,
+        onStart: (page) => {
+            loadingClaim.value = true
+        },
+        onFinish: (page) => {
+            loadingClaim.value = false
+        },
+        onSuccess: (page) => {
+            //console.log('success', page.props)
+            countClaim.value += 1
+            qrValue.value = page.props.flash.data.qr
+            tglExpiredVoucher.value = page.props.flash.data.tglExpired
+            doneClaim.value = true
+
+            snackbar.add({
+                type: 'success',
+                text: page.props.flash.message
+            })
+
+            modalVoucher.value.show(page.props.flash.data.qr, page.props.flash.data.linkQr)
+        },
+        onError: (errors) => {
+            console.log('error', erros);
+            snackbar.add({
+                type: 'error',
+                text: Object.values(errors).join("\n")
+            })
+        },
+    })
 }
+
+function moveWa() {
+    moveWaApi(props.bengkel.NO_PONSEL)
+}
+
+const assets = process.env.NODE_ENV != 'production' ? '/img' : 'https://otomotives.com/oscar/img';
+const items = [
+    assets + '/review-sengkaling/1.jpeg',
+    assets + '/review-sengkaling/2.jpeg',
+    assets + '/review-sengkaling/3.jpeg',
+    assets + '/review-sengkaling/4.jpeg',
+    assets + '/review-sengkaling/5.jpeg',
+    assets + '/review-sengkaling/6.jpeg',
+    assets + '/review-sengkaling/7.jpeg',
+    assets + '/review-sengkaling/8.jpeg',
+    assets + '/review-sengkaling/9.jpeg',
+];
 
 onMounted(() => {
 
@@ -105,27 +168,36 @@ onMounted(() => {
     <div>
 
         <Head>
-            <title>{{ props.bengkel.NAMA_BENGKEL }}</title>
-            <meta head-key="description" name="description" :content="'Bengkel ' + props.bengkel.NAMA_BENGKEL" />
+            <title>{{ namaBengkel }}</title>
+            <meta head-key="description" name="description" :content="'Bengkel ' + ucwords(props.bengkel.NAMA_BENGKEL)" />
             <link rel="icon" type="image/svg+xml" :href="props.bengkel.LOGO" />
         </Head>
-        <LayoutGoogleAds1 :namaBengkel="props.bengkel.NAMA_BENGKEL" @voucher-click="voucherClick" @foto-click="fotoClick"
+        <LayoutGoogleAds1 :namaBengkel="namaBengkel" @voucher-click="voucherClick" @foto-click="fotoClick"
             @lokasi-click="lokasiClick" @fasilitas-click="fasilitasClick">
             <Waves class="rotate-180" />
-            <section id="voucher" class="p-2 m-2">
+            <section id="voucher" class="PY-2">
                 <div class="container">
-                    <div class="row gx-4 gx-lg-5 align-items-center my-5">
-                        <div class="col-lg-7">
-                            <img class="card shadow-lg rounded-lg img-fluid rounded mb-4 mb-lg-0"
-                                :src="$baseAssets + '/banner/ads/banner_ads_sengkaling_md.png'" alt="..." />
+                    <div class="row row-cols-1 justify-content-center align-items-center">
+                        <div class="col mb-3">
+                            <div class="banner justify-content-center align-items-center">
+                                <div class="card shadow-lg rounded-lg">
+                                    <img class="img-fluid" :src="isMobile ? $baseAssets + '/banner/ads/disc_2_600_1200.png'
+                                        : $baseAssets + '/banner/ads/disc_2_600_700.png'" alt="banner" />
+                                    <div v-if="loadingClaim" class="loading">
+                                        <div class="spinner-border text-white"></div>
+                                    </div>
+                                </div>
+                                <a href="#" class="claim" @click.prevent="showVoucher"></a>
+                                <a href="#" class="address text-white" @click.prevent="lokasiClick">
+                                    {{ bengkel.ALAMAT }}
+                                </a>
+                                <a href="#" class="ponsel text-white" target="_blank" @click.prevent="moveWa">
+                                    +{{ bengkel.NO_PONSEL }}
+                                </a>
+                            </div>
                         </div>
-                        <div class="col-lg-5">
-                            <h1 class="fw-bolder text-center mb-3">Dapatkan Voucher Diskon Servis Dengan Memasukkan No.
-                                Ponsel
-                            </h1>
-                            <button type="button" class="btn btn-primary rounded-full w-100"
-                                @click.prevent="showVoucher">Klaim Voucher Servis
-                                Sekarang!</button>
+                        <div class="col mt-5">
+                            <Caraousel class="" :items="items" />
                         </div>
                     </div>
                 </div>
@@ -136,11 +208,11 @@ onMounted(() => {
                     <div class="row text-center mt-5 my-3">
                         <div class="col-lg-12">
                             <h2 class="display-5 fw-bolder text-center text-black">
-                                Fasilitas {{ props.bengkel.NAMA_BENGKEL }}
+                                Fasilitas {{ namaBengkel }}
                             </h2>
                         </div>
                         <div class="col-lg-12">
-                            <h5>Nikmati Kenyamanan dengan Fasilitas yg ada di {{ props.bengkel.NAMA_BENGKEL }}</h5>
+                            <h5>Nikmati Kenyamanan dengan Fasilitas yg ada di {{ namaBengkel }}</h5>
                         </div>
                     </div>
                     <div class="row align-items-center justify-content-center">
@@ -160,7 +232,7 @@ onMounted(() => {
                             </h2>
                         </div>
                         <div class="col-lg-12">
-                            <h5>Foto Bengkel {{ props.bengkel.NAMA_BENGKEL }}</h5>
+                            <h5>Foto Bengkel {{ namaBengkel }}</h5>
                         </div>
                     </div>
                     <div class="d-flex align-items-center justify-content-center">
@@ -231,6 +303,31 @@ onMounted(() => {
                     </div>
                 </div>
             </section>
+            <!-- <section class="section colored section-overlay">
+                <div class="container">
+                    <div class="row row-cols-1 align-items-center d-flex justify-content-center text-center">
+                        <div v-if="bengkel.LOGO" class="col mb-4">
+                            <img :src="bengkel.LOGO" width="100" height="100" alt="logo bengkel" />
+                        </div>
+                        <div class="col">
+                            <p><strong>{{ namaBengkel }}</strong> Memberikan Diskon Servis Buat Kamu Secara
+                                <strong>Gratis</strong> Untuk Perawatan
+                                Kendaraan Mu Agar Pengalaman Berkendara Mu Semakin Nyaman dan Aman!
+                            </p>
+                        </div>
+                        <div class="col">
+                            <button type="button" class="btn main-button w-100" @click.prevent="showVoucher"
+                                :disabled="loadingClaim">
+                                <span v-if="loadingClaim" class="spinner-border text-white"></span>
+                                <span v-else>Dapatkan Diskon Servis Sekararang Juga!</span>
+                            </button>
+                        </div>
+                        <div v-if="doneClaim" class="col">
+                            <p class="text-info">*Kamu sudah klaim diskon vocuher sebanyak x{{ countClaim }} </p>
+                        </div>
+                    </div>
+                </div>
+            </section> -->
             <section v-if="false" class="section colored section-overlay" id="input-no-ponsel">
                 <div v-if="isLoading" class="overlay-loading d-flex align-items-center justify-content-center">
                     <div class="spinner-border text-primary md">
@@ -294,10 +391,13 @@ onMounted(() => {
                     </div>
                 </div>
             </section>
-            <ModalQRCodeVoucher :qr-value="'khesa alvandi sembodo'" ref="modalVoucher"
-                :qr-desc="`Diskon Servis 20% untuk Layanan ${bengkel.NAMA_LAYANAN}`" :data-bengkel="bengkel">
+            <ModalQRCodeVoucher ref="modalVoucher"
+                :qr-desc="`Diskon Servis 20% di ${namaBengkel}\nGunakan Diskon Sebelum Tanggal ${tglExpiredVoucher}`"
+                :data-bengkel="bengkel">
                 <template #content>
-                    <p class="">tunjukan qr-code kepada kasir saat melakukan pembayaran untuk menggunakan diskon</p>
+                    <p class="text-muted">
+                        *Salin Link atau Screenshot Voucher Diskon
+                    </p>
                 </template>
             </ModalQRCodeVoucher>
         </LayoutGoogleAds1>
@@ -313,5 +413,122 @@ header.masthead {
     background-repeat: no-repeat;
     background-attachment: scroll;
     background-size: cover;
+}
+
+.banner {
+    width: 100% !important;
+    height: 100% !important;
+    position: relative;
+}
+
+.banner .loading {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0.7;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(173, 122, 173);
+}
+
+
+@media only screen and (min-width: 320px) {
+
+    .banner .claim {
+        position: absolute;
+        bottom: 2%;
+        right: 0;
+        padding: 3% 2%;
+        font-size: 0.8rem;
+        width: 35%;
+        height: 10%;
+    }
+
+    .banner .address {
+        position: absolute;
+        display: flex;
+        justify-content: end;
+        bottom: 10.5%;
+        left: 21%;
+        font-size: 0.65rem;
+        width: 40%;
+        height: auto;
+    }
+
+    .banner .ponsel {
+        position: absolute;
+        display: flex;
+        justify-content: end;
+        bottom: 4.2%;
+        left: 21%;
+        font-size: 0.65rem;
+        width: auto;
+        height: auto;
+    }
+}
+
+@media only screen and (min-width : 810px) {
+    .banner .address {
+        position: absolute;
+        display: flex;
+        justify-content: end;
+        bottom: 9%;
+        left: 16%;
+        font-size: 0.65rem;
+        width: 20%;
+        height: auto;
+    }
+
+    .banner .ponsel {
+        position: absolute;
+        display: flex;
+        justify-content: end;
+        bottom: 4%;
+        left: 16%;
+        font-size: 0.65rem;
+        width: auto;
+        height: auto;
+    }
+}
+
+/* big landscape tablets, laptops, and desktops */
+@media (min-width: 1025px) or (min-width: 1281px) {
+    .banner {
+        position: relative;
+    }
+
+    .banner .claim {
+        position: absolute;
+        bottom: 2%;
+        right: 0;
+        padding: 3% 2%;
+        font-size: 0.8rem;
+        width: 35%;
+        height: 10%;
+    }
+
+    .banner .address {
+        position: absolute;
+        display: flex;
+        justify-content: end;
+        bottom: 10.5%;
+        left: 15%;
+        font-size: 0.8rem;
+        width: auto;
+        height: auto;
+    }
+
+    .banner .ponsel {
+        position: absolute;
+        display: flex;
+        justify-content: end;
+        bottom: 3.8%;
+        left: 15%;
+        font-size: 0.8rem;
+        width: auto;
+        height: auto;
+    }
 }
 </style>

@@ -1,7 +1,10 @@
 <?php
 
-if (!function_exists('legible_numb')) {
-    function legible_numb($numb) {
+use App\Enum\MessageType;
+
+if (! function_exists('legible_numb')) {
+    function legible_numb($numb)
+    {
         if ($numb >= 1000000) { // Million
             $legibleNumb = round(number_format($numb, 0, ',', '.'), 1) . 'M';
         } elseif ($numb >= 100000 && $numb < 1000000) { // One hundred thousand
@@ -16,14 +19,16 @@ if (!function_exists('legible_numb')) {
     }
 }
 
-if (!function_exists('format_rupiah')) {
-    function format_rupiah($value) {
+if (! function_exists('format_rupiah')) {
+    function format_rupiah($value)
+    {
         return 'Rp. ' . number_format($value, 0, ',', '.');
     }
 }
 
-if (!function_exists('format_only_number')) {
-    function format_only_number($value) {
+if (! function_exists('format_only_number')) {
+    function format_only_number($value)
+    {
         if (empty($value)) {
             return 0;
         }
@@ -32,13 +37,14 @@ if (!function_exists('format_only_number')) {
     }
 }
 
-if (!function_exists('format_no_ponsel_62')) {
-    function format_no_ponsel_62($noPonsel) {
-        if (!isset($noPonsel) || $noPonsel == null || empty($noPonsel)) {
+if (! function_exists('format_no_ponsel_62')) {
+    function format_no_ponsel_62($noPonsel)
+    {
+        if (! isset($noPonsel) || $noPonsel == null || empty($noPonsel)) {
             return '';
         }
 
-        if (!Str::startsWith($noPonsel, '0') && (!Str::startsWith($noPonsel, '62') || !Str::startsWith($noPonsel, '+62'))) {
+        if (! Str::startsWith($noPonsel, '0') && (! Str::startsWith($noPonsel, '62') || ! Str::startsWith($noPonsel, '+62'))) {
             return '';
         }
 
@@ -62,10 +68,11 @@ if (!function_exists('format_no_ponsel_62')) {
     }
 }
 
-if (!function_exists('insert_array_specific_index')) {
-    function insert_array_specific_index($array, $index, $val) {
+if (! function_exists('insert_array_specific_index')) {
+    function insert_array_specific_index($array, $index, $val)
+    {
         $size = count($array);
-        if (!is_int($index) || $index < 0 || $index > $size) {
+        if (! is_int($index) || $index < 0 || $index > $size) {
             return -1;
         } else {
             $temp   = array_slice($array, 0, $index);
@@ -73,5 +80,18 @@ if (!function_exists('insert_array_specific_index')) {
 
             return array_merge($temp, array_slice($array, $index, $size));
         }
+    }
+}
+
+if (! function_exists('message_to_type')) {
+
+    function message_to_type($message) : MessageType
+    {
+        $message = strtolower($message);
+        if (Str::contains('error', $message)) {
+            return MessageType::ERROR;
+        }
+
+        return MessageType::SUCCESS;
     }
 }
