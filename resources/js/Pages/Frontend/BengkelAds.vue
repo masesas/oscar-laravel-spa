@@ -165,7 +165,6 @@ onMounted(() => {
     AOS.init()
 })
 
-
 </script>
 <template>
     <div class="position-relative">
