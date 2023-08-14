@@ -160,9 +160,11 @@ const items = [
     assets + '/review-sengkaling/9.jpeg',
 ];
 
+
 onMounted(() => {
     AOS.init()
 })
+
 
 </script>
 <template>
