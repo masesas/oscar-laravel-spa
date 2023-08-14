@@ -134,7 +134,7 @@ nav {
     color: #1e1e1e;
 }
 
-.h-subtitle{
+.h-subtitle {
     font-weight: 500;
     font-family: Poppins;
     font-size: 14px;
@@ -147,7 +147,7 @@ nav {
     position: relative;
 }
 
-.banner a{
+.banner a {
     text-decoration: underline !important;
 }
 
@@ -169,58 +169,46 @@ nav {
 
     .banner .claim {
         position: absolute;
-        bottom: 2%;
+        bottom: 1.5%;
         right: 0;
         padding: 3% 2%;
         font-size: 0.8rem;
-        width: 35%;
-        height: 10%;
+        width: 40%;
+        height: 15%;
     }
 
     .banner .address {
         position: absolute;
-        display: flex;
-        justify-content: end;
-        bottom: 10.5%;
-        left: 21%;
-        font-size: 0.65rem;
-        width: 40%;
-        height: auto;
+        bottom: 46%;
+        right: 0;
+        width: 67%;
+        height: 5%;
     }
 
     .banner .ponsel {
         position: absolute;
-        display: flex;
-        justify-content: end;
-        bottom: 5.3%;
-        left: 21%;
-        font-size: 0.65rem;
-        width: auto;
-        height: auto;
+        bottom: 46%;
+        left: 2%;
+        width: 30%;
+        height: 5%;
     }
 }
 
 @media only screen and (min-width : 810px) {
     .banner .address {
         position: absolute;
-        display: flex;
-        justify-content: end;
-        bottom: 9%;
-        left: 16%;
-        font-size: 0.65rem;
-        width: 20%;
-        height: auto;
+        bottom: 44%;
+        right: 0;
+        width: 63%;
+        height: 5%;
     }
 
     .banner .ponsel {
         position: absolute;
-        display: flex;
-        justify-content: end;
-        bottom: 3%;
-        left: 16%;
-        font-size: 0.65rem;
-        width: auto;
-        height: auto;
+        bottom: 44%;
+        left: 0;
+        width: 35%;
+        height: 5%;
     }
 }
 
@@ -232,33 +220,27 @@ nav {
 
     .banner .claim {
         position: absolute;
-        bottom: 2%;
+        bottom: 3%;
         right: 0;
         padding: 3% 2%;
         font-size: 0.8rem;
-        width: 35%;
+        width: 40%;
         height: 10%;
     }
 
     .banner .address {
         position: absolute;
-        display: flex;
-        justify-content: end;
-        bottom: 8%;
-        left: 16%;
-        font-size: 1.5rem;
-        width: 30%;
-        height: auto;
+        bottom: 44%;
+        left: 40%;
+        width: 60%;
+        height: 5%;
     }
 
     .banner .ponsel {
         position: absolute;
-        display: flex;
-        justify-content: end;
-        bottom: 2.5%;
-        left: 16%;
-        font-size: 1.5rem;
-        width: auto;
-        height: auto;
+        bottom: 44%;
+        left: 2%;
+        width: 35%;
+        height: 5%;
     }
 }

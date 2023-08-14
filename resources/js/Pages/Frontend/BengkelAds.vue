@@ -16,6 +16,7 @@ import { ucwords } from '@/Utils/formating-utils';
 import Caraousel from "@/Components/Caraousel.vue"
 import { useScreenSize } from '../../Composable/screen_size';
 import { moveWaApi } from '@/Utils/url';
+import AOS from "aos"
 
 const props = defineProps({
     bengkel: {
@@ -160,7 +161,7 @@ const items = [
 ];
 
 onMounted(() => {
-
+    AOS.init()
 })
 
 </script>
@@ -179,25 +180,23 @@ onMounted(() => {
         <LayoutGoogleAds1 :namaBengkel="namaBengkel" @voucher-click="voucherClick" @foto-click="fotoClick"
             @lokasi-click="lokasiClick" @fasilitas-click="fasilitasClick">
             <Waves class="rotate-180" />
-            <section id="voucher" class="PY-2">
+            <section id="voucher" class="py-2">
                 <div class="container">
                     <div class="row row-cols-1 justify-content-center align-items-center">
-                        <div class="col mb-3">
+                        <div class="col mb-3" data-aos="fade-right">
                             <div class="banner justify-content-center align-items-center">
                                 <div class="card shadow-lg rounded-lg">
-                                    <img class="img-fluid" :src="isMobile ? $baseAssets + '/banner/ads/disc_md.png'
-                                        : $baseAssets + '/banner/ads/disc_lg.png'" alt="banner" />
+                                    <img class="img-fluid" :src="isMobile ? $baseAssets + '/banner/ads/disc_new_md.png'
+                                        : $baseAssets + '/banner/ads/disc_new_lg.png'" alt="banner" />
                                 </div>
                                 <a href="#" class="claim" @click.prevent="showVoucher"></a>
                                 <a href="#" class="address text-white" @click.prevent="lokasiClick">
-                                    {{ bengkel.ALAMAT }}
                                 </a>
                                 <a href="#" class="ponsel text-white" target="_blank" @click.prevent="moveWa">
-                                    +{{ bengkel.NO_PONSEL }}
                                 </a>
                             </div>
                         </div>
-                        <div class="col mt-5">
+                        <div class="col mt-5" data-aos="fade-left">
                             <Caraousel class="" :items="items" />
                         </div>
                     </div>
@@ -205,7 +204,7 @@ onMounted(() => {
             </section>
             <Waves />
             <section id="fasilitas" class="section colored mb-3 p-2">
-                <div class="container">
+                <div class="container" data-aos="fade-left">
                     <div class="row text-center mt-5 my-3">
                         <div class="col-lg-12">
                             <h2 class="display-5 fw-bolder text-center text-black">
@@ -225,7 +224,7 @@ onMounted(() => {
                 </div>
             </section>
             <section id="foto" class="bg-light py-5">
-                <div class="container">
+                <div class="container" data-aos="fade-right">
                     <div class="row text-center mt-5 my-3">
                         <div class="col-lg-12">
                             <h2 class="display-5 fw-bolder text-center text-black">
@@ -283,7 +282,7 @@ onMounted(() => {
                 </div>
             </section>
             <section id="lokasi" class="bg-light py-5">
-                <div class="container">
+                <div class="container" data-aos="fade-right">
                     <div class="row text-center my-3">
                         <div class="col-lg-12">
                             <h2 class="display-5 fw-bolder text-center">

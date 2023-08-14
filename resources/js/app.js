@@ -22,6 +22,7 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import 'vue3-carousel/dist/carousel.css';
 import { loadFont } from './Utils/formating-utils';
+import 'aos/dist/aos.css'
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Oscar';
 

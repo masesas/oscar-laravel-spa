@@ -9,6 +9,7 @@
         "@mdi/js": "^7.0.96",
         "@popperjs/core": "^2.11.6",
         "@vitejs/plugin-vue": "^3.0.1",
+        "aos": "^2.3.4",
         "autoprefixer": "^10.4.2",
         "axios": "^0.27",
         "bootstrap": "^5.2.3",
