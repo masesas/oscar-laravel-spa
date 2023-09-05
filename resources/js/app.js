@@ -23,6 +23,7 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 import 'vue3-carousel/dist/carousel.css';
 import { loadFont } from './Utils/formating-utils';
 import 'aos/dist/aos.css'
+import AOS from "aos"
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Oscar';
 
@@ -49,6 +50,12 @@ createInertiaApp({
         myApp.use(pinia)
         myApp.use(ZiggyVue, Ziggy)
         myApp.use(SnackbarService)
+        myApp.use(AOS.init({
+            once: false,
+            mirror: true,
+            debounceDelay: 50,
+            anchorPlacement: 'top-center'
+        }))
         myApp.use(VueGtag, {
             config: { id: "AW-11226084301" }
         })
@@ -63,7 +70,7 @@ createInertiaApp({
         return myApp;
     },
 }).then(r => {
-    console.log(route('bengkel.ads.', {cid : 'asd'}))
+    //console.log(route('bengkel.ads.', {cid : 'asd'}))
 })
 
 const styleStore = useStyleStore(pinia)

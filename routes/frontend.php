@@ -1,8 +1,6 @@
 <?php
 
 use App\Http\Controllers\Frontend\BengkelAdsController;
-use Illuminate\Support\Facades\Route;
-
 
 Route::group([
     'namespace' => 'App\Http\Controllers\Frontend',
@@ -19,7 +17,12 @@ Route::group([
         ], function(){
             Route::get('{cid}', [BengkelAdsController::class, 'index']);
 
-            Route::post('claim-voucher', [BengkelAdsController::class, 'claimVoucherStore'])->name('claim_voucher');
+            Route::post('click-wa/{cid}', [BengkelAdsController::class, 'updateClickWa'])
+                ->name('click_wa');
+
+
+            Route::post('claim-voucher', [BengkelAdsController::class, 'storeClaimVoucher'])
+                ->name('claim_voucher');
         });
     });
 });

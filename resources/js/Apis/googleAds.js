@@ -18,3 +18,4 @@ export function claimVoucher(params) {
         }
     });
 }
+

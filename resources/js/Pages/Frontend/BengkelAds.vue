@@ -144,7 +144,16 @@ function showVoucher() {
 }
 
 function moveWa() {
-    moveWaApi(props.bengkel.NO_PONSEL)
+    router.post(
+        route('bengkel.ads.click_wa', props.bengkel.CID),
+        {
+            noPonselBengkel: props.bengkel.NO_PONSEL
+        },
+        /* {
+            preserveScroll: true
+        } */
+    )
+
 }
 
 const assets = process.env.NODE_ENV != 'production' ? '/img' : 'https://otomotives.com/oscar/img';
@@ -162,7 +171,7 @@ const items = [
 
 
 onMounted(() => {
-    AOS.init()
+    AOS.refresh()
 })
 
 
@@ -174,6 +183,7 @@ onMounted(() => {
                 <span class="spinner-border text-white" style="width: 3rem; height: 3rem;"></span>
             </div>
         </div>
+
         <Head>
             <title>{{ namaBengkel }}</title>
             <meta head-key="description" name="description" :content="'Bengkel ' + ucwords(props.bengkel.NAMA_BENGKEL)" />
@@ -194,7 +204,7 @@ onMounted(() => {
                                 <a href="#" class="claim" @click.prevent="showVoucher"></a>
                                 <a href="#" class="address text-white" @click.prevent="lokasiClick">
                                 </a>
-                                <a href="#" class="ponsel text-white" target="_blank" @click.prevent="moveWa">
+                                <a href="#" class="ponsel text-white" @click.prevent="moveWa">
                                 </a>
                             </div>
                         </div>
@@ -206,18 +216,18 @@ onMounted(() => {
             </section>
             <Waves />
             <section id="fasilitas" class="section colored mb-3 p-2">
-                <div class="container" data-aos="fade-left">
+                <div class="container">
                     <div class="row text-center mt-5 my-3">
-                        <div class="col-lg-12">
+                        <div class="col-lg-12" data-aos="fade-left" data-aos-duration="2000" >
                             <h2 class="display-5 fw-bolder text-center text-black">
                                 Fasilitas {{ namaBengkel }}
                             </h2>
                         </div>
-                        <div class="col-lg-12">
+                        <div class="col-lg-12" data-aos="fade-up-left" data-aos-duration="2000">
                             <h5>Nikmati Kenyamanan dengan Fasilitas yg ada di {{ namaBengkel }}</h5>
                         </div>
                     </div>
-                    <div class="row align-items-center justify-content-center">
+                    <div class="row align-items-center justify-content-center" data-aos="fade-left" data-aos-duration="2000">
                         <div class="col-lg-12 col-md-12 d-flex justify-content-center">
                             <img class="card shadow-lg rounded-lg img-big rounded mb-4 mb-lg-0"
                                 :src="$baseAssets + '/banner/keuntungan_ahass_sengkaling_medium.png'" alt="..." />
@@ -227,7 +237,7 @@ onMounted(() => {
             </section>
             <section id="foto" class="bg-light py-5">
                 <div class="container" data-aos="fade-right">
-                    <div class="row text-center mt-5 my-3">
+                    <div class="row text-center mt-5 my-3" data-aos="fade-right" data-aos-duration="2000" >
                         <div class="col-lg-12">
                             <h2 class="display-5 fw-bolder text-center text-black">
                                 Foto Bengkel
@@ -240,7 +250,7 @@ onMounted(() => {
                     <div class="d-flex align-items-center justify-content-center">
                         <div class="row align-items-center justify-content-center text-center">
                             <div v-if="props.bengkel.FOTO_DEPAN" class="col-lg-3 col-md-3 col-sm-3 mb-4 mb-md-0">
-                                <div class="card shadow">
+                                <div class="card shadow" data-aos="fade-up-right" data-aos-duration="2000" >
                                     <div class="card-img-top">
                                         <img :src="props.bengkel.FOTO_DEPAN" class="foto" />
                                     </div>
@@ -249,7 +259,7 @@ onMounted(() => {
                                     </div>
                                 </div>
                             </div>
-                            <div v-if="props.bengkel.FOTO_AREA_SERVIS" class="col-md-3 col-sm-3 mb-4 mb-md-0">
+                            <div v-if="props.bengkel.FOTO_AREA_SERVIS" class="col-md-3 col-sm-3 mb-4 mb-md-0" data-aos="fade-up-left" data-aos-duration="2000" >
                                 <div class="card shadow">
                                     <div class="card-img-top">
                                         <img :src="props.bengkel.FOTO_AREA_SERVIS" class="foto" />
@@ -259,7 +269,7 @@ onMounted(() => {
                                     </div>
                                 </div>
                             </div>
-                            <div v-if="props.bengkel.FOTO_AREA_TUNGGU" class="col-md-3 col-sm-3 col-12 mb-4 mb-md-0">
+                            <div v-if="props.bengkel.FOTO_AREA_TUNGGU" class="col-md-3 col-sm-3 col-12 mb-4 mb-md-0" data-aos="fade-up-right" data-aos-duration="2000" >
                                 <div class="card shadow">
                                     <div class="card-img-top">
                                         <img :src="props.bengkel.FOTO_AREA_TUNGGU" class="foto" />
@@ -269,7 +279,7 @@ onMounted(() => {
                                     </div>
                                 </div>
                             </div>
-                            <div v-if="props.bengkel.FOTO_AREA_KASIR" class="col-md-3 col-sm-3 col-12 mb-4 mb-md-0">
+                            <div v-if="props.bengkel.FOTO_AREA_KASIR" class="col-md-3 col-sm-3 col-12 mb-4 mb-md-0" data-aos="fade-up-left" data-aos-duration="2000" >
                                 <div class="card shadow">
                                     <div class="card-img-top">
                                         <img :src="props.bengkel.FOTO_AREA_KASIR" class="foto" />

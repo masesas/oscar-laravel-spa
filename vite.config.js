@@ -16,6 +16,14 @@ export default ({ mode }) => {
 
             }
         },
+        server: {
+            hmr: {
+                host: 'localhost',
+            },
+            /*  watch: {
+                usePolling: true,
+             } */
+        },
         plugins: [
             removePreloads(),
             laravel({

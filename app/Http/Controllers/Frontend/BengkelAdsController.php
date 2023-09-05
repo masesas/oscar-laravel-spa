@@ -6,8 +6,10 @@ use App\Enum\MessageType;
 use App\Http\Requests\ClaimVoucherRequest;
 use App\Models\BengkelPro\BarcodeDiscount;
 use App\Models\BengkelPro\BengkelModel;
+use App\Models\BengkelPro\DiscountGoogleAds;
 use App\Models\MessageTemplate;
 use DB;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Inertia\Inertia;
 use Throwable;
@@ -31,11 +33,11 @@ class BengkelAdsController extends Controller
         ]);
     }
 
-    public function claimVoucherStore(ClaimVoucherRequest $request)
+    public function storeClaimVoucher(ClaimVoucherRequest $request)
     {
-        $clientIP   = request()->ip();
+        //$clientIP   = request()->ip();
         $qrCode     = '';
-        $linkQrCode = 'https://otomotives.com/#/barcodeDisc/';
+        $linkQrCode = 'https://otomotives.com/barcodeDisc/';
         $tglExpired = '';
 
         DB::connection('mysql_oto')->beginTransaction();
@@ -108,5 +110,29 @@ class BengkelAdsController extends Controller
                 'type'    => $messageType->value,
                 'data'    => $data,
             ]);
+    }
+
+    public function updateClickWa(Request $request, $cid)
+    {
+        DB::connection('mysql_oto')->beginTransaction();
+        try {
+            $res = DiscountGoogleAds::query()->where('CID', $cid)->update([
+                'CLICK_WA' => DB::raw('IFNULL(CLICK_WA, 0) + 1')
+            ]);
+
+            \Log::info($cid);
+
+            DB::connection('mysql_oto')->commit();
+        } catch(Throwable $e) {
+            \Log::error('error >>> ' . $e);
+            DB::connection('mysql_oto')->rollBack();
+        }
+
+        $noPonselBengkel = $request->noPonselBengkel;
+        $waUrl = "https://api.whatsapp.com/send/?phone=$noPonselBengkel";
+
+        return Inertia::location($waUrl);
+        //return redirect()->to($waUrl);
+        //return redirect()->back();
     }
 }

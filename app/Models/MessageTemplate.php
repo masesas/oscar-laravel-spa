@@ -33,7 +33,7 @@ class MessageTemplate extends BaseDBotomotives {
             $message = $this->formatMessage($messageData->MESSAGE, [
                 'discount' => $discPercentage . '%',
                 'namaBengkel'    => $namaBengkel,
-                'linkQrCode'     => 'https://otomotives.com/#/barcodeDisc/' . $qrCode,
+                'linkQrCode'     => 'https://otomotives.com/barcodeDisc/' . $qrCode,
                 'namaLayanan' => $namaLayanan,
             ]);
         }
