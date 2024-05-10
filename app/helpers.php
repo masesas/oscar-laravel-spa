@@ -15,7 +15,6 @@ if (! function_exists('legible_numb')) {
             $legibleNumb = number_format($numb, 0, ',', '.');
         }
 
-        
         return $legibleNumb;
     }
 }
@@ -85,7 +84,6 @@ if (! function_exists('insert_array_specific_index')) {
 }
 
 if (! function_exists('message_to_type')) {
-
     function message_to_type($message) : MessageType
     {
         $message = strtolower($message);
