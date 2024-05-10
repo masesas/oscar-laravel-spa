@@ -2,8 +2,12 @@ import { ref, onMounted, onUnmounted, computed } from 'vue'
 
 export function useScreenSize() {
     let windowWidth = ref(window.innerWidth)
+    let isMobile = ref(false)
 
-    const onWidthChange = () => windowWidth.value = window.innerWidth
+    const onWidthChange = (event) => {
+        windowWidth.value = window.innerWidth
+        isMobile.value = windowWidth.value <= 768
+    }
     onMounted(() => window.addEventListener('resize', onWidthChange))
     onUnmounted(() => window.removeEventListener('resize', onWidthChange))
 
@@ -18,7 +22,6 @@ export function useScreenSize() {
 
     const width = computed(() => windowWidth.value)
 
-    const isMobile = computed(() => windowWidth.value <= 768);
-
+    //const isMobile = computed(() => windowWidth.value <= 768)
     return { width, type, isMobile }
 }

@@ -1,0 +1,20 @@
+{
+    "folders": [
+        {
+            "path": ".."
+        }
+    ],
+    "settings": {
+        "[vue]": {
+            "editor.formatOnSave": true,
+            "editor.defaultFormatter": "Vue.volar",
+        },
+        "[nginx]": {
+            "editor.defaultFormatter": "ahmadalli.vscode-nginx-conf"
+        },
+        "[php]": {
+            "editor.formatOnSave": true,
+            "editor.defaultFormatter": "junstyle.php-cs-fixer",
+        },
+    }
+}
