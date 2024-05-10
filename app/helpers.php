@@ -15,6 +15,7 @@ if (! function_exists('legible_numb')) {
             $legibleNumb = number_format($numb, 0, ',', '.');
         }
 
+        
         return $legibleNumb;
     }
 }
