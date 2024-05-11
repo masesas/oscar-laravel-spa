@@ -3,6 +3,9 @@ set -e
 
 echo "Deploying..."
 
+#set the path to full permission
+sudo chmod -R 755 /var/www/otomotives.com/oscar
+
 # Enter maintenance mode or return true
 # if already is in maintenance mode
 (php8.1 artisan down) || true
