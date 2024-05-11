@@ -13,6 +13,9 @@ sudo chmod -R 755 /var/www/otomotives.com/oscar
 # restore any changes
 git restore .
 
+# clear untracted files. currently was public files
+git clean -f -d
+
 # Pull the latest version of the app
 git pull
 
