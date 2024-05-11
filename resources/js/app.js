@@ -74,7 +74,7 @@ createInertiaApp({
 })
 
 const styleStore = useStyleStore(pinia)
-const layoutStore = useLayoutStore(pinia)
+const layoutStore = useLayoutStore(pinia) 
 
 /* App style */
 styleStore.setStyle(localStorage[styleKey] ?? 'basic')
