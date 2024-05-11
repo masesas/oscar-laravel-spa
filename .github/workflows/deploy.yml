@@ -13,7 +13,7 @@ jobs:
     # if: false
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Deploy to server
         uses: appleboy/ssh-action@master
@@ -25,7 +25,7 @@ jobs:
           script: "cd /var/www/otomotives.com/oscar && ./.scripts/deploy.sh" #&& ./.scripts/deploy.sh
 
       # - name: Cache composer dependencies
-      #   uses: actions/cache@v2
+      #   uses: actions/cache@v3
       #   with:
       #     path: vendor
       #     key: composer-${{ hashFiles('**/composer.lock') }}
@@ -34,7 +34,7 @@ jobs:
 
       # - name: Install composer dependencies
       #   run: |
-      #     composer install --no-scripts
+      #     php8.1 /usr/local/bin/composer install -q --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
       # - name: Install NPM dependencies
       #   run: npm install
