@@ -88,7 +88,6 @@ if ((!localStorage[darkModeKey] && window.matchMedia('(prefers-color-scheme: dar
     styleStore.setDarkMode(false)
 }
 
-
 /* Collapse mobile aside menu on route change */
 router.on('navigate', (event) => {
     layoutStore.isAsideExpanded = false
