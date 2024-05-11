@@ -17,7 +17,7 @@ git restore .
 git clean -f -d
 
 # Pull the latest version of the app
-git pull
+git pull origin master
 
 # Install composer dependencies
 php8.1 /usr/local/bin/composer install -q --no-dev --no-interaction --prefer-dist --optimize-autoloader
