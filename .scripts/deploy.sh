@@ -4,7 +4,7 @@ set -e
 echo "Deploying..."
 
 #set the path to full permission
-sudo chmod -R 755 /var/www/otomotives.com/oscar
+echo 'oto@git' | sudo -S chmod -R 755 /var/www/otomotives.com/oscar
 
 # Enter maintenance mode or return true
 # if already is in maintenance mode
