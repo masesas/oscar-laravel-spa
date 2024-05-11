@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
       - name: Deploy to server
         uses: appleboy/ssh-action@master
         with:
@@ -20,5 +21,23 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSHKEY }}
-          script: "cd /var/www/otomotives.com/oscar && ./.scripts/deploy.sh"
+          script: "cd /var/www/otomotives.com/oscar && ./.scripts/deploy.sh" #&& ./.scripts/deploy.sh
+
+      # - name: Cache composer dependencies
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: vendor
+      #     key: composer-${{ hashFiles('**/composer.lock') }}
+      #     restore-keys: |
+      #       composer-
+
+      # - name: Install composer dependencies
+      #   run: |
+      #     composer install --no-scripts
+
+      # - name: Install NPM dependencies
+      #   run: npm install
+
+      # - name: Compile assets
+      #   run: npm run build
 
