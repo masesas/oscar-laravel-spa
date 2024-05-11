@@ -13,4 +13,8 @@ npm-debug.log
 yarn-error.log
 /.idea
 #/.vscode
-.scripts/
+#deploy.sh
+.scripts/rr
+.rr.yaml
+rr
+.rr.yaml
