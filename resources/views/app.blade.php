@@ -14,6 +14,7 @@
     {{-- <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" type="text/css"> --}}
 
     <title inertia>{{ config('app.name', 'Oscar') }}</title>
+    
 
     <!-- Scripts -->
     @routes

@@ -6,7 +6,6 @@ use App\Http\Controllers\Frontend\PosAhassSengkalingAdsController;
 Route::group([
     'namespace' => 'App\Http\Controllers\Frontend',
 ], function () {
-
     Route::group([
         'prefix' => 'bengkel',
         'as' => 'bengkel.'
@@ -25,7 +24,6 @@ Route::group([
 
             Route::post('claim-voucher', [BengkelAdsController::class, 'storeClaimVoucher'])
                 ->name('claim_voucher');
-
         });
     });
 });
