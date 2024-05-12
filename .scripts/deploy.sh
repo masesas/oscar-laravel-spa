@@ -3,6 +3,7 @@ set -e
 
 echo "Deploying..."
 
+
 #set the path to full permission
 #echo 'oto@git' | sudo -S chmod -R 755 /var/www/otomotives.com/oscar
 
