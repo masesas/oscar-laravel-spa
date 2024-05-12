@@ -22,8 +22,8 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.USER_PW }}
           port: ${{ secrets.PORT }}
-          key: ${{ secrets.SSHKEY_ROOT }}
-          script: "cd /var/www/otomotives.com/oscar && echo 'oto@git' | sudo -S sh ./.scripts/deploy.sh" #&& ./.scripts/deploy.sh
+          key: ${{ secrets.SSHKEY }}
+          script: "cd /var/www/otomotives.com/oscar && ./.scripts/deploy.sh" #&& ./.scripts/deploy.sh
 
       # - name: Cache composer dependencies
       #   uses: actions/cache@v3
