@@ -3,7 +3,6 @@ set -e
 
 echo "Deploying..."
 
-
 #set the path to full permission
 #echo 'oto@git' | sudo -S chmod -R 755 /var/www/otomotives.com/oscar
 
@@ -11,10 +10,8 @@ echo "Deploying..."
 # if already is in maintenance mode
 (php8.1 artisan down) || true
 
-# restore any changes
-# git restore .
-
 # clear untracted files. currently was public files
+git restore .
 git clean -f -d
 
 # Pull the latest version of the app
